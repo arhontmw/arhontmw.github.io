@@ -1,0 +1,19 @@
+:root {
+    /* party color scheme */
+    --confetti: #490A3D;
+    --hearts: #BD1550;
+    --cocktail: #E97F02;
+    --euphoria: #F8CA00;
+    --balloon: #8A9B0F;
+
+    /* wordless color scheme */
+    --white: #fff;
+    --special-shirt: #CBE86B;
+    --write-it: #F2E9E1;
+    --karma: #1C140D;
+
+    /* metro color scheme */
+    --gray: #515151;
+    --metro-blue: #00B4FF;
+    --qwhite: #EEEEEE;
+}

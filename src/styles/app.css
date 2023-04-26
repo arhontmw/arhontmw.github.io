@@ -1,0 +1,42 @@
+@import url("./colors.css");
+@import url("./main-info.css");
+@import url("./play.css");
+@import url("./settings.css");
+@import url("./visualizer.css");
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    width: 100vw;
+    height: 100vh;
+}
+
+:root {
+    --app-background-color: var(--white);
+}
+
+.app {
+    background-color: var(--app-background-color);
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding: 10% 6%;
+}

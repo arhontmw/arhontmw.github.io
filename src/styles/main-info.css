@@ -1,0 +1,36 @@
+:root {
+    --bpm-changed-animation-time: 1s;
+
+    --bpm-font-size: 2rem;
+
+    --bpm-color: var(--gray);
+    --bpm-color-changed: var(--hearts);
+}
+
+.main-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.bpm,
+.measure {
+    text-align: center;
+    color: var(--bpm-color);
+    font-size: var(--bpm-font-size);
+    font-weight: 700;
+}
+
+.bpm-changed {
+    animation: bpm-changed var(--bpm-changed-animation-time);
+}
+
+@keyframes bpm-changed {
+    0% {
+        color: var(--bpm-color-changed);
+    }
+    100% {
+        color: var(--bpm-color);
+    }
+}

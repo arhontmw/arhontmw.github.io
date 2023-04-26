@@ -1,0 +1,81 @@
+:root {
+    --beat-animation-time: 0.2s;
+
+    --bar-width: 4rem;
+    --bar-height: 3rem;
+
+    --bar-border-color: var(--gray);
+    --bar-background-color: var(--gray);
+    --bar-background-color-active: var(--metro-blue);
+
+    --beat-extra-animator-background-color: var(--metro-blue);
+
+    --beat-animation-container-background-color: var(--gray);
+}
+
+.visualization-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.bars-container {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.bar {
+    width: var(--bar-width);
+    height: var(--bar-height);
+    border-radius: 2px;
+    background-color: var(--bar-background-color);
+}
+
+.bar-active {
+    animation: bar-active var(--beat-animation-time);
+}
+
+.beat-animation-container {
+    margin-top: 0.05rem;
+    height: 3rem;
+    width: 100%;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: var(--beat-animation-container-background-color);
+}
+
+.beat-extra-animator {
+    position: relative;
+    height: 100%;
+    width: var(--bar-width);
+    background-color: var(--beat-extra-animator-background-color);
+    will-change: transform;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.beat-extra-animator_active {
+    animation-name: beat-extra-animator-active;
+}
+
+@keyframes bar-active {
+    0% {
+        background-color: var(--bar-background-color-active);
+    }
+    100% {
+        background-color: var(--bar-background-color);
+    }
+}
+
+@keyframes beat-extra-animator-active {
+    0% {
+        left: 0%;
+    }
+    100% {
+        left: calc(100% - var(--bar-width));
+    }
+}
