@@ -10,7 +10,6 @@
     --reset-button-color: var(--gray);
 }
 
-
 .tempo-button-container {
     display: flex;
     flex-direction: column;
@@ -50,8 +49,3 @@
 .reset-button:active {
     transform: scale(0.8);
 }
-
-/* .tempo-button:hover {
-    opacity: 0.9;
-    color: var(--hearts);
-} */

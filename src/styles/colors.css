@@ -1,9 +1,14 @@
 :root {
     --hearts: #BD1550;
+
+    /* default-theme */
     --white: #fff;
     --gray: #515151;
-    --gray50: rgba(81, 81, 81, 0.8);
+    --gray80: rgba(81, 81, 81, 0.8);
+    --light-gray: #ddd;
     --metro-blue: #00B4FF;
 
-    --light-gray: #ddd;
+    /* ob-gradient-theme*/
+    --white40: rgba(255, 255, 255, 0.4);
+
 }
