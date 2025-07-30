@@ -35,29 +35,40 @@ function init() {
         metronome.togglePlay();
     });
 
-    runWakeLock();
+    let interactionStarted = false;
+    // fix iOS wake lock
+    document.addEventListener('click', () => {
+        if (!interactionStarted) {
+            runWakeLock();
+            interactionStarted = true;
+        }
+    });
 }
 
 init();
 
-async function runWakeLock() {
+function runWakeLock() {
     let wakeLock = null;
 
     const requestWakeLock = async () => {
         try {
-            wakeLock = await navigator.wakeLock.request();
+            wakeLock = await navigator.wakeLock.request('screen');
             wakeLock.addEventListener('release', () => {
-                console.log('Screen Wake Lock released:', wakeLock.released);
+                console.log('Wake Lock was released');
             });
-            console.log('Screen Wake Lock released:', wakeLock.released);
-        } catch (err) {
-            console.error(`${err.name}, ${err.message}`);
+            console.log('Wake Lock is active');
+        } catch (e) {
+            console.error(`${e.name}, ${e.message}`);
         }
     };
 
-    await requestWakeLock();
-    window.setTimeout(() => {
-        wakeLock.release();
-        wakeLock = null;
-    }, 5000);
+    requestWakeLock();
+
+    const handleVisibilityChange = () => {
+        if (wakeLock !== null && document.visibilityState === 'visible') {
+            requestWakeLock();
+        }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
 };
