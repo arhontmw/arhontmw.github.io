@@ -2,7 +2,7 @@
     --beat-animation-time: 0.2s;
 
     --bar-width: 100%;
-    --bar-height: 12vh;
+    --bar-height: 12dvh;
     --bar-radius: 12px;
 
     --bar-border-color: var(--gray50);
@@ -52,7 +52,7 @@
 
 .beat-animation-container {
     margin-top: 0.1rem;
-    height: 3vh;
+    height: 3dvh;
     width: 100%;
     border-radius: var(--bar-radius);
     overflow: hidden;

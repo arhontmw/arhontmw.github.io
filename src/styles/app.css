@@ -29,7 +29,7 @@ body {
 body {
     font-family: Helvetica, Arial, sans-serif;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
 }
 
 :root {
@@ -39,9 +39,9 @@ body {
 .app {
     background-color: var(--app-background-color);
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     box-sizing: border-box;
-    padding: 3vh 6vw;
+    padding: 3dvh 6vw;
     display: flex;
     flex-direction: column;
 }
