@@ -2,6 +2,8 @@ import { Metronome } from './metronome.js';
 import { Player } from './player.js';
 import { Visualizer } from './visualizer.js';
 import { Settings, SETTINGS_KEY } from './settings.js';
+import { initWakeLock } from './wake-lock.js';
+import { initVibration } from './vibration.js';
 import { Storage } from './utils.js';
 
 const retrieveSavedSettings = () => Storage.read(SETTINGS_KEY) || {};
@@ -25,8 +27,10 @@ function init() {
     );
 
     settings.init();
+    initWakeLock();
+    initVibration();
 
-    player.onClick(() => {
+    player.listen(() => {
         visualizer.toggleBeatExtraAnimator({
             shouldPause: player.isPlaying(),
             duration: metronome.getSecondsPerBeat()
@@ -34,41 +38,6 @@ function init() {
         player.togglePlay();
         metronome.togglePlay();
     });
-
-    let interactionStarted = false;
-    // fix iOS wake lock
-    document.addEventListener('click', () => {
-        if (!interactionStarted) {
-            runWakeLock();
-            interactionStarted = true;
-        }
-    });
 }
 
 init();
-
-function runWakeLock() {
-    let wakeLock = null;
-
-    const requestWakeLock = async () => {
-        try {
-            wakeLock = await navigator.wakeLock.request('screen');
-            wakeLock.addEventListener('release', () => {
-                console.log('Wake Lock was released');
-            });
-            console.log('Wake Lock is active');
-        } catch (e) {
-            console.error(`${e.name}, ${e.message}`);
-        }
-    };
-
-    requestWakeLock();
-
-    const handleVisibilityChange = () => {
-        if (wakeLock !== null && document.visibilityState === 'visible') {
-            requestWakeLock();
-        }
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange)
-};

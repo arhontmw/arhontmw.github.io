@@ -8,16 +8,17 @@
     --play-button-background-color: var(--gray);
     --play-button-background-color-hover: var(--hearts);
     --play-button-color: var(--white);
+
+    --player-container-height: 10px;
 }
 
 .player-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 100%;
     /* height: var(--player-container-height); */
     margin-top: auto;
-    margin-bottom: 12dvh;
+    margin-bottom: 8dvh;
 }
 
 .play-button {
@@ -28,6 +29,7 @@
     background-color: var(--play-button-background-color);
     color: var(--play-button-color);
     transition: transform 0.1s;
+    box-shadow: var(--box-shadow-default);
 }
 
 .play-button:active {

@@ -28,7 +28,7 @@ export class Player {
         return this.#playing;
     }
 
-    onClick(cb) {
+    listen(cb) {
         this.#button.addEventListener('click' , cb);
     }
 

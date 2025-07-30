@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Simple Metronome</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./src/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./src/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./src/icons/favicon-16x16.png">
+    <link rel="manifest" href="./manifest.json">
     <link rel="stylesheet" href="./src/styles/app.css">
 </head>
 <body ontouchstart=""><!-- fix iOS -->
     <div class="app ob-gradient-theme">
         <div class="visualization-container">
             <div class="main-info">
-                <button class="bpm"></button>
-                <button class="measure"></button>
+                <button class="bpm" data-vibro="1"></button>
+                <button class="measure" data-vibro="1"></button>
             </div>
             <div class="bars-container"></div>
             <div class="beat-animation-container">
@@ -20,35 +24,37 @@
         </div>
         <div class="player-container">
             <div class="tempo-button-container">
-                <button class="tempo-button minus-5" data-delta="-5">
+                <button class="tempo-button minus-5" data-delta="-5" data-vibro="1">
                     -5
                 </button>
-                <button class="tempo-button minus-1" data-delta="-1">
+                <button class="tempo-button minus-1" data-delta="-1" data-vibro="1">
                     -
                 </button>
             </div>
-            <button class="play-button">
+            <button class="play-button" data-vibro="1">
                 <div class="play-pause-icon play-pause-icon_play"></div>
             </button>
             <div class="tempo-button-container">
-                <button class="tempo-button plus-5" data-delta="5">
+                <button class="tempo-button plus-5" data-delta="5" data-vibro="1">
                     +5
                 </button>
-                <button class="tempo-button plus-1" data-delta="1">
+                <button class="tempo-button plus-1" data-delta="1" data-vibro="1">
                     +
                 </button>
             </div>
         </div>
         <div class="settings-container">
-            <button class="reset-button">RESET BPM</button>
+            <button class="reset-button" data-vibro="1">RESET BPM</button>
         </div>
-        <div class="modal modal_visible bpm-settings">
+        <div class="modal bpm-settings">
             <div class="modal-settings-container">
-                <label for="bpm-input">ENTER BPM</label>
-                <input type="number" class="bpm-input" name="bpm-input">
+                <label class="settings-bpm-input-label" for="bpm-input">ENTER BPM</label>
+                <input class="settings-bpm-input" type="number" name="bpm-input" min="20" max="600">
+                <button class="settings-bpm-save-button" data-vibro="1">SAVE</button>
             </div>
         </div>
     </div>
     <script src="./src/scripts/app.js" type="module"></script>
+    <script src="./src/scripts/service-worker.js" type="module"></script>
 </body>
 </html>

@@ -12,4 +12,11 @@
 
 .modal.modal_visible {
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-settings-container {
+    display: flex;
+    flex-direction: column;
 }

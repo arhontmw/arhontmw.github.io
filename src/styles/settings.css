@@ -1,11 +1,11 @@
 :root {
-    --font-size: 2rem;
+    --font-size: 1.5rem;
 
     --tempo-button-background-color: var(--gray);
     --tempo-button-color: var(--white);
     --tempo-button-color-active: var(--hearts);
-    --tempo-button-width: 3rem;
-    --tempo-button-height: 3rem;
+    --tempo-button-width: 4rem;
+    --tempo-button-height: 4rem;
 
     --reset-button-color: var(--gray);
 }
@@ -15,6 +15,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    gap: 2rem;
 }
 
 .tempo-button {
@@ -26,6 +27,7 @@
     font-size: var(--font-size);
     transition: transform 0.3s;
     border-radius: var(--play-button-border-radius);
+    box-shadow: var(--box-shadow-default);
 }
 
 .tempo-button:active {

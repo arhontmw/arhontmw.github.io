@@ -20,6 +20,8 @@ export class Settings {
     #measureContainer;
     #player;
     #resetButton;
+    #settingsBpmValue;
+    #settingsBpmInput;
 
     constructor(metronome, visr, player, savedSettings) {
         this.#metronome = metronome;
@@ -39,6 +41,7 @@ export class Settings {
         this.#bpm = document.querySelector('.bpm');
         this.#measureContainer = document.querySelector('.measure');
         this.#resetButton = document.querySelector('.reset-button');
+        this.#settingsBpmInput = document.querySelector('.settings-bpm-input');
     }
 
     init() {
@@ -54,6 +57,7 @@ export class Settings {
 
     #setBpm(tempo) {
         this.#bpm.innerText = tempo;
+        this.#settingsBpmInput.value = tempo;
     }
 
     #setMeasure(measure) {
@@ -62,7 +66,6 @@ export class Settings {
 
     addListeners() {
         this.#tempoButtons = document.querySelectorAll('.tempo-button');
-
         this.#tempoButtons.forEach((button) => {
             button.addEventListener('click', (event) => {
                 const delta = Number(event.target.dataset.delta || 0);
@@ -71,6 +74,10 @@ export class Settings {
                 this.#updateSettings();
             });
         });
+
+        // this.#settingsBpmInput.addEventListener('input', (e) => {
+        //     console.log(e.target.value);
+        // });
 
         this.#resetButton.addEventListener('click', () => {
             this.#tempo = DEFAULT_TEMPO;

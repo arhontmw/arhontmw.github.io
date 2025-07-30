@@ -1,0 +1,23 @@
+{
+    "name": "Solid Metronome",
+    "short_name": "Metronome",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "description": "Simple fast-loading metronome to train your rhythm and music skills",
+    "icons": [
+        {
+            "src": "./src/icons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "./src/icons/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#030f76",
+    "orientation": "portrait",
+    "categories": ["music", "education", "utilities"]
+}
