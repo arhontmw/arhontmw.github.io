@@ -1,16 +1,54 @@
 :root {
-    --tempo-button-background-volor: var(--white);
-    --tempo-button-color: var(--gray);
-    --tempo-button-color-hover: var(--hearts);
+    --font-size: 2rem;
+
+    --tempo-button-background-color: var(--gray);
+    --tempo-button-color: var(--white);
+    --tempo-button-color-active: var(--hearts);
+    --tempo-button-width: 3rem;
+    --tempo-button-height: 3rem;
+
+    --reset-button-color: var(--gray);
+}
+
+
+.tempo-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .tempo-button {
-    width: 40px;
-    height: 40px;
-    background-color: var(--tempo-button-background-volor);
+    width: var(--tempo-button-width);
+    height: var(--tempo-button-height);
+    background-color: var(--tempo-button-background-color);
     color: var(--tempo-button-color);
     font-weight: 700;
-    font-size: 32px;
+    font-size: var(--font-size);
+    transition: transform 0.3s;
+    border-radius: var(--play-button-border-radius);
+}
+
+.tempo-button:active {
+    transform: scale(0.8);
+    background-color: var(--tempo-button-color-active);
+}
+
+.settings-container {
+    text-align: center;
+}
+
+.reset-button {
+    background-color: transparent;
+    transition: transform 0.3s;
+    color: var(--reset-button-color);
+    font-weight: 700;
+    padding: 6px 12px;
+    font-size: 1rem;
+}
+
+.reset-button:active {
+    transform: scale(0.8);
 }
 
 /* .tempo-button:hover {

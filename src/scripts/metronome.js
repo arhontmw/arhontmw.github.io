@@ -65,7 +65,10 @@ export class Metronome {
     }
 
     #playNote(beatNumber, time) {
-        this.#player.playSound({ beatNumber, time, measure: this.#measure });
+        if (!this.#visr.isBarMuted({ beatNumber })) {
+            this.#player.playSound({ beatNumber, time, measure: this.#measure });
+        }
+
         this.#visr.activate({ beatNumber, time, measure: this.#measure });
     }
 

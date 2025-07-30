@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metronome</title>
+    <title>Simple Metronome</title>
     <link rel="stylesheet" href="./styles/app.css">
 </head>
 <body>
-    <div class="app">
+    <div class="app dotted-theme">
         <div class="visualization-container">
             <div class="main-info">
                 <div class="bpm"></div>
@@ -19,27 +19,28 @@
             </div>
         </div>
         <div class="player-container">
-            <button class="tempo-button minus-5" data-delta="-5">
-                -5
-            </button>
-            <!--
-            <button class="tempo-button minus-1" data-delta="-1">
-                -
-            </button>
-            -->
+            <div class="tempo-button-container">
+                <button class="tempo-button minus-5" data-delta="-5">
+                    -5
+                </button>
+                <button class="tempo-button minus-1" data-delta="-1">
+                    -
+                </button>
+            </div>
             <button class="play-button">
                 <div class="play-pause-icon play-pause-icon_play"></div>
             </button>
-            <!--
-            <button class="tempo-button plus-1" data-delta="1">
-                +
-            </button>
-            -->
-            <button class="tempo-button plus-5" data-delta="5">
-                +5
-            </button>
+            <div class="tempo-button-container">
+                <button class="tempo-button plus-5" data-delta="5">
+                    +5
+                </button>
+                <button class="tempo-button plus-1" data-delta="1">
+                    +
+                </button>
+            </div>
         </div>
-        <div class="settings">
+        <div class="settings-container">
+            <button class="reset-button">RESET BPM</button>
         </div>
     </div>
     <script src="./scripts/app.js" type="module"></script>

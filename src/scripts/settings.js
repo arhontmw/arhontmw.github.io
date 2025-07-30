@@ -15,13 +15,11 @@ export class Settings {
     #tempo;
     #measure;
     #noteValue;
-    #secondsInMinute;
-    #lookahead;
-    #scheduleAheadTime;
     #tempoButtons;
     #bpm;
     #measureContainer;
     #player;
+    #resetButton;
 
     constructor(metronome, visr, player, savedSettings) {
         this.#metronome = metronome;
@@ -32,20 +30,15 @@ export class Settings {
             tempo,
             measure,
             noteValue,
-            secondsInMinute,
-            lookahead,
-            scheduleAheadTime
         } = savedSettings;
 
         this.#tempo = tempo || DEFAULT_TEMPO;
         this.#measure = measure || DEFAULT_MEASURE;
         this.#noteValue = noteValue || DEFAULT_NOTE_VALUE;
-        this.#secondsInMinute = secondsInMinute || SECONDS_IN_MINUTE;
-        this.#lookahead = lookahead || LOOKAHEAD;
-        this.#scheduleAheadTime = scheduleAheadTime || SCHEDULE_AHEAD_TIME;
 
         this.#bpm = document.querySelector('.bpm');
         this.#measureContainer = document.querySelector('.measure');
+        this.#resetButton = document.querySelector('.reset-button');
     }
 
     init() {
@@ -75,15 +68,24 @@ export class Settings {
                 const delta = Number(event.target.dataset.delta || 0);
 
                 this.#tempo += delta;
-                this.#setBpm(this.#tempo);
-                this.#animateTempoChange();
-                this.#saveSettings();
-                this.#metronome.setTempo(this.#tempo, this.#player.isPlaying());
-                this.#visr.toggleBeatExtraAnimator({
-                    shouldPause: !this.#player.isPlaying(),
-                    duration: this.#metronome.getSecondsPerBeat()
-                });
+                this.#updateSettings();
             });
+        });
+
+        this.#resetButton.addEventListener('click', () => {
+            this.#tempo = DEFAULT_TEMPO;
+            this.#updateSettings();
+        });
+    }
+
+    #updateSettings() {
+        this.#setBpm(this.#tempo);
+        this.#animateTempoChange();
+        this.#saveSettings();
+        this.#metronome.setTempo(this.#tempo, this.#player.isPlaying());
+        this.#visr.toggleBeatExtraAnimator({
+            shouldPause: !this.#player.isPlaying(),
+            duration: this.#metronome.getSecondsPerBeat()
         });
     }
 
@@ -92,9 +94,9 @@ export class Settings {
             tempo: this.#tempo,
             measure: this.#measure,
             noteValue: this.#noteValue,
-            secondsInMinute: this.#secondsInMinute,
-            lookahead: this.#lookahead,
-            scheduleAheadTime: this.#scheduleAheadTime
+            secondsInMinute: SECONDS_IN_MINUTE,
+            lookahead: LOOKAHEAD,
+            scheduleAheadTime: SCHEDULE_AHEAD_TIME
         };
     }
 

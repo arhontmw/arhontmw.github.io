@@ -1,6 +1,7 @@
 :root {
-    --play-button-width: 5rem;
-    --play-button-height: 5rem;
+    /* --player-container-height: 7rem; */
+    --play-button-width: 7rem;
+    --play-button-height: 7rem;
     --play-button-border-radius: 6px;
 
     --play-beat-animation-time: 0.1s;
@@ -12,10 +13,12 @@
 
 .player-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    width: 80vw;
-    margin: 5rem auto 0;
+    width: 100%;
+    /* height: var(--player-container-height); */
+    margin-top: auto;
+    margin-bottom: 12vh;
 }
 
 .play-button {
@@ -25,11 +28,16 @@
     cursor: pointer;
     background-color: var(--play-button-background-color);
     color: var(--play-button-color);
+    transition: transform 0.1s;
+}
+
+.play-button:active {
+    transform: scale(0.98);
 }
 
 .play-pause-icon {
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -40,7 +48,7 @@
 
 .play-pause-icon_play {
     border-style: solid;
-    border-width: 1.5rem 0 1.5rem 3rem;
+    border-width: 2rem 0 2rem 4rem;
     border-color: transparent transparent transparent var(--play-button-color);
 }
 

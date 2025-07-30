@@ -26,7 +26,7 @@ export class Visualizer {
 
     setBars(barsCount) {
         this.#barsContainer.innerHTML = '';
-        this.#bars = [];
+        this.#bars = new Array(barsCount);
 
         this.resetIdx();
 
@@ -37,8 +37,12 @@ export class Visualizer {
 
             div.className = 'bar';
 
+            div.addEventListener('click', (event) => {
+                event.target.classList.toggle('bar-muted');
+            });
+
             this.#barsContainer.appendChild(div);
-            this.#bars.push(div);
+            this.#bars[i] = div;
         }
     }
 
@@ -67,6 +71,10 @@ export class Visualizer {
                 });
             });
         }
+    }
+
+    isBarMuted({ beatNumber: idx }) {
+        return this.#bars[idx].classList.contains('bar-muted');
     }
 
     #barPulse({ beatNumber: idx, time, measure }) {

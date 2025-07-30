@@ -4,7 +4,7 @@ import { Visualizer } from './visualizer.js';
 import { Settings, SETTINGS_KEY } from './settings.js';
 import { Storage } from './utils.js';
 
-const retreiveSavedSettings = () => Storage.read(SETTINGS_KEY) || {};
+const retrieveSavedSettings = () => Storage.read(SETTINGS_KEY) || {};
 
 function init() {
     const visualizer = new Visualizer();
@@ -16,7 +16,7 @@ function init() {
         player
     );
 
-    const savedSettings = retreiveSavedSettings();
+    const savedSettings = retrieveSavedSettings();
     const settings = new Settings(
         metronome,
         visualizer,
@@ -34,6 +34,11 @@ function init() {
         player.togglePlay();
         metronome.togglePlay();
     });
+
+    // Запрет на масштабирование при двойном тапе
+    document.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+      }, { passive: false });
 }
 
 init();
