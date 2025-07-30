@@ -1,0 +1,15 @@
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    width: 100%;
+    background-color: var(--bar-background-color);
+    backdrop-filter: blur(10px);
+}
+
+.modal.modal_visible {
+    display: flex;
+}
