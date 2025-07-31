@@ -8,15 +8,12 @@
     --play-button-background-color: var(--gray);
     --play-button-background-color-hover: var(--hearts);
     --play-button-color: var(--white);
-
-    --player-container-height: 10px;
 }
 
 .player-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    /* height: var(--player-container-height); */
     margin-top: auto;
     margin-bottom: 8dvh;
 }

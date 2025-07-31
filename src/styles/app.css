@@ -1,6 +1,5 @@
 @import url("./colors.css");
 @import url("./modal.css");
-@import url("./main-info.css");
 @import url("./play.css");
 @import url("./settings.css");
 @import url("./visualizer.css");
@@ -61,4 +60,5 @@ body {
     --reset-button-color: var(--white);
     --bpm-color: var(--white);
     --beat-animation-container-background-color: var(--white40);
+    --bpm-background-color: var(--white40);
 }

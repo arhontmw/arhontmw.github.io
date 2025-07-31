@@ -1,6 +1,12 @@
 :root {
     --font-size: 1.5rem;
 
+    --bpm-font-size: 2rem;
+    --bpm-changed-animation-time: 1s;
+    --bpm-color: var(--gray);
+    --bpm-background-color: transparent;
+    --bpm-color-changed: var(--hearts);
+
     --tempo-button-background-color: var(--gray);
     --tempo-button-color: var(--white);
     --tempo-button-color-active: var(--hearts);
@@ -35,10 +41,11 @@
     background-color: var(--tempo-button-color-active);
 }
 
-.settings-container {
+.footer-settings-container {
     text-align: center;
 }
 
+.settings-button,
 .reset-button {
     background-color: transparent;
     transition: transform 0.3s;
@@ -48,6 +55,48 @@
     font-size: 1rem;
 }
 
+.settings-button {
+    padding: 0;
+}
+
+.settings-button:active,
 .reset-button:active {
     transform: scale(0.8);
+}
+
+.settings-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.bpm,
+.measure {
+    text-align: center;
+    color: var(--bpm-color);
+    font-size: var(--bpm-font-size);
+    background-color: var(--bpm-background-color);
+    font-weight: 700;
+    transition: transform 0.3s;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+
+.bpm:active,
+.measure:active {
+    transform: scale(0.9);
+}
+
+.bpm-changed {
+    animation: bpm-changed var(--bpm-changed-animation-time);
+}
+
+@keyframes bpm-changed {
+    0% {
+        color: var(--bpm-color-changed);
+    }
+
+    100% {
+        color: var(--bpm-color);
+    }
 }
