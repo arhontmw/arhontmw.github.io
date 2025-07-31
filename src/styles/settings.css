@@ -71,7 +71,7 @@
 }
 
 .bpm,
-.measure {
+.time-signature {
     text-align: center;
     color: var(--bpm-color);
     font-size: var(--bpm-font-size);
@@ -83,7 +83,7 @@
 }
 
 .bpm:active,
-.measure:active {
+.time-signature:active {
     transform: scale(0.9);
 }
 

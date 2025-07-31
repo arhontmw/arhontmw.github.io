@@ -1,93 +1,39 @@
 export class Visualizer {
-    #barsContainer;
-    #barsCount;
-    #barIdx;
-    #bars;
+    #dom;
     #barActivationMethod;
-    #beatExtraAnimator;
 
-    constructor() {
-        this.#barsContainer = document.querySelector('.bars-container');
-        this.#beatExtraAnimator = document.querySelector('.beat-extra-animator')
-        this.#bars = [];
-        this.#barIdx = 0;
+    constructor(dom) {
+        this.#dom = dom;
         this.setBarActivationMethod();
     }
 
-    resetIdx() {
-        this.#barIdx = 0;
-    }
-
     setOptions(options) {
-        const { measure } = options;
+        const { beats } = options;
 
-        this.setBars(measure);
+        this.setBars(beats);
     }
 
     setBars(barsCount) {
-        this.#barsContainer.innerHTML = '';
-        this.#bars = new Array(barsCount);
-
-        this.resetIdx();
-
-        this.#barsCount = barsCount;
-
-        for (let i = 0; i < barsCount; i++)  {
-            const div = document.createElement('div');
-
-            div.className = 'bar';
-
-            div.addEventListener('click', (event) => {
-                event.target.classList.toggle('bar-muted');
-            });
-
-            this.#barsContainer.appendChild(div);
-            this.#bars[i] = div;
-        }
+        this.#dom.setBars(barsCount);
     }
 
     setBarActivationMethod(method) {
         switch (method) {
             default:
-                this.#barActivationMethod = this.#barPulse;
+                this.#barActivationMethod = this.#dom.barPulse;
                 return;
         }
     }
 
-    activate({ beatNumber, time, measure }) {
-        this.#barActivationMethod({ beatNumber, time, measure });
+    activate({ beatNumber, time, beats }) {
+        this.#barActivationMethod({ beatNumber, time, beats });
     }
 
     toggleBeatExtraAnimator({ shouldPause, duration }) {
-        if (shouldPause) {
-            this.#beatExtraAnimator.style.animationPlayState = 'paused';
-        } else {
-            this.#beatExtraAnimator.style.animationDuration = `${duration}s`;
-            this.#beatExtraAnimator.style.animationPlayState = 'running';
-            this.#beatExtraAnimator.className = 'beat-extra-animator';
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    this.#beatExtraAnimator.classList.add('beat-extra-animator_active');
-                });
-            });
-        }
+        this.#dom.toggleBeatExtraAnimator({ shouldPause, duration });
     }
 
-    isBarMuted({ beatNumber: idx }) {
-        return this.#bars[idx].classList.contains('bar-muted');
-    }
-
-    #barPulse({ beatNumber: idx, time, measure }) {
-        this.#bars.forEach((bar) => {
-            bar.classList.remove('bar-active')
-        });
-
-        const currentBar = this.#bars[idx];
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                currentBar.classList.add('bar-active');
-            });
-        });
+    isBarMuted(idx) {
+        return this.#dom.isBarMuted(idx);
     }
 }

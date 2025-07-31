@@ -6,7 +6,7 @@ export class Metronome {
     #lookahead;
     #scheduleAheadTime;
     #tempo;
-    #measure;
+    #beats;
     #noteValue;
     #nextNoteTime;
     #noteIdx;
@@ -29,7 +29,7 @@ export class Metronome {
     setOptions(options) {
         const {
             tempo,
-            measure,
+            beats,
             noteValue,
             secondsInMinute,
             lookahead,
@@ -43,15 +43,15 @@ export class Metronome {
         this.#scheduleAheadTime = scheduleAheadTime;
 
         this.#tempo = tempo;
-        // measure / noteValue - eg. 4 / 4
-        this.#measure = measure;
+        // beats / noteValue - eg. 4 / 4
+        this.#beats = beats;
         this.#noteValue = noteValue; // whole, half, quarter, eighth, sixteenth
 
     }
 
     #reset() {
         this.#nextNoteTime = 0.0;
-        this.#noteIdx = 0; // according to measure. Eg 4: 0, 1, 2, 3 | 0, 1, 2, 3 | 0, 1, 2, 3
+        this.#noteIdx = 0; // according to beats. Eg 4: 0, 1, 2, 3 | 0, 1, 2, 3 | 0, 1, 2, 3
         this.#isRunning = false;
         clearInterval(this.#intervalId);
         this.#intervalId = null;
@@ -65,18 +65,18 @@ export class Metronome {
     }
 
     #playNote(beatNumber, time) {
-        if (!this.#visr.isBarMuted({ beatNumber })) {
-            this.#player.playSound({ beatNumber, time, measure: this.#measure });
+        if (!this.#visr.isBarMuted(beatNumber)) {
+            this.#player.playSound({ beatNumber, time, beats: this.#beats });
         }
 
-        this.#visr.activate({ beatNumber, time, measure: this.#measure });
+        this.#visr.activate({ beatNumber, time, beats: this.#beats });
     }
 
     #nextNote() {
         const secondsPerBeat = this.getSecondsPerBeat();
 
         this.#nextNoteTime += secondsPerBeat;
-        this.#noteIdx = (this.#noteIdx + 1) % this.#measure;
+        this.#noteIdx = (this.#noteIdx + 1) % this.#beats;
     }
 
     #start() {
@@ -94,7 +94,6 @@ export class Metronome {
 
     #stop() {
         this.#reset();
-        this.#visr.resetIdx();
     }
 
     togglePlay() {
@@ -118,9 +117,9 @@ export class Metronome {
         }
     }
 
-    setMeasure(measure, start = true) {
+    setBeats(beats, start = true) {
         this.#stop();
-        this.#measure = measure;
+        this.#beats = beats;
 
         if (start) {
             this.#start();

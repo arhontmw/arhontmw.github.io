@@ -1,23 +1,20 @@
 export class Player {
-    #button;
+    #dom;
     #playing;
     #ctx;
     #playSoundMethod;
-    #buttonIcon;
 
-    constructor(ctx) {
+    constructor(dom, ctx) {
+        this.#dom = dom;
         this.#ctx = ctx;
         this.#playing = false;
 
-        this.#button = document.querySelector('.play-button');
-        this.#buttonIcon = document.querySelector('.play-pause-icon');
         this.setPlaySoundMethod();
     }
 
     togglePlay() {
         this.togglePlayingStatus();
-        this.#buttonIcon.classList.toggle('play-pause-icon_play');
-        this.#buttonIcon.classList.toggle('play-pause-icon_stop');
+        this.#dom.togglePlay();
     }
 
     togglePlayingStatus() {
@@ -29,7 +26,7 @@ export class Player {
     }
 
     listen(cb) {
-        this.#button.addEventListener('click' , cb);
+        this.#dom.listen(cb);
     }
 
     setPlaySoundMethod(method) {
@@ -40,16 +37,16 @@ export class Player {
         }
     }
 
-    playSound({ beatNumber, time, measure }) {
-        this.#animatePlayButton();
-        this.#playSoundMethod({ beatNumber, time, measure });
+    playSound({ beatNumber, time, beats }) {
+        this.#dom.animatePlayButton();
+        this.#playSoundMethod({ beatNumber, time, beats });
     }
 
-    #playOscillator({ beatNumber, time, measure }) {
+    #playOscillator({ beatNumber, time, beats }) {
         const osc = this.#ctx.createOscillator();
         const envelope = this.#ctx.createGain();
 
-        osc.frequency.value = (beatNumber % measure === 0) ? 1200 : 800;
+        osc.frequency.value = (beatNumber % beats === 0) ? 1200 : 800;
         envelope.gain.value = 1;
         envelope.gain.exponentialRampToValueAtTime(1, time + 0.001);
         envelope.gain.exponentialRampToValueAtTime(0.001, time + 0.02);
@@ -59,15 +56,5 @@ export class Player {
 
         osc.start(time);
         osc.stop(time + 0.03);
-    }
-
-    #animatePlayButton() {
-        this.#button.className = 'play-button';
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                this.#button.classList.add('play-active');
-            });
-        });
     }
 }

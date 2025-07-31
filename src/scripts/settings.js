@@ -1,7 +1,7 @@
 import { Storage } from './utils.js';
 
 const DEFAULT_TEMPO = 120;
-const DEFAULT_MEASURE = 4;
+const DEFAULT_BEATS = 4;
 const DEFAULT_NOTE_VALUE = 4;
 const SECONDS_IN_MINUTE = 60;
 const LOOKAHEAD = 25; // ms
@@ -10,38 +10,30 @@ const SCHEDULE_AHEAD_TIME = 0.1; // sec
 export const SETTINGS_KEY = 'metronome-settings';
 
 export class Settings {
+    #dom;
     #metronome;
     #visr;
     #tempo;
-    #measure;
+    #beats;
     #noteValue;
-    #tempoButtons;
-    #bpm;
-    #measureContainer;
     #player;
-    #resetButton;
-    #settingsBpmValue;
-    #settingsBpmInput;
 
-    constructor(metronome, visr, player, savedSettings) {
+    constructor(dom, metronome, visr, player, savedSettings) {
+        this.#dom = dom;
+
         this.#metronome = metronome;
         this.#visr = visr;
         this.#player = player;
 
         const {
             tempo,
-            measure,
+            beats,
             noteValue,
         } = savedSettings;
 
         this.#tempo = tempo || DEFAULT_TEMPO;
-        this.#measure = measure || DEFAULT_MEASURE;
+        this.#beats = beats || DEFAULT_BEATS;
         this.#noteValue = noteValue || DEFAULT_NOTE_VALUE;
-
-        this.#bpm = document.querySelector('.bpm');
-        this.#measureContainer = document.querySelector('.measure');
-        this.#resetButton = document.querySelector('.reset-button');
-        this.#settingsBpmInput = document.querySelector('.settings-bpm-input');
     }
 
     init() {
@@ -51,35 +43,29 @@ export class Settings {
         this.#visr.setOptions(settings)
 
         this.#setBpm(this.#tempo);
-        this.#setMeasure(this.#measure);
-        this.addListeners();
+        this.#setTimeSignature(this.#beats);
+        this.#listen();
     }
 
     #setBpm(tempo) {
-        this.#bpm.innerText = tempo;
-        this.#settingsBpmInput.value = tempo;
+        this.#dom.setBpm(tempo);
     }
 
-    #setMeasure(measure) {
-        this.#measureContainer.innerText = `${measure} / 4`;
+    #setTimeSignature(beats) {
+        this.#dom.setTimeSignature(beats);
     }
 
-    addListeners() {
-        this.#tempoButtons = document.querySelectorAll('.tempo-button');
-        this.#tempoButtons.forEach((button) => {
-            button.addEventListener('click', (event) => {
-                const delta = Number(event.target.dataset.delta || 0);
-
-                this.#tempo += delta;
-                this.#updateSettings();
-            });
+    #listen() {
+        this.#dom.listenTempoButtonClick(({ delta }) => {
+            this.#tempo += delta;
+            this.#updateSettings();
         });
 
         // this.#settingsBpmInput.addEventListener('input', (e) => {
         //     console.log(e.target.value);
         // });
 
-        this.#resetButton.addEventListener('click', () => {
+        this.#dom.listenResetButtonClick(() => {
             this.#tempo = DEFAULT_TEMPO;
             this.#updateSettings();
         });
@@ -87,7 +73,7 @@ export class Settings {
 
     #updateSettings() {
         this.#setBpm(this.#tempo);
-        this.#animateTempoChange();
+        this.#dom.animateTempoChange();
         this.#saveSettings();
         this.#metronome.setTempo(this.#tempo, this.#player.isPlaying());
         this.#visr.toggleBeatExtraAnimator({
@@ -99,22 +85,12 @@ export class Settings {
     #getSettings() {
         return {
             tempo: this.#tempo,
-            measure: this.#measure,
+            beats: this.#beats,
             noteValue: this.#noteValue,
             secondsInMinute: SECONDS_IN_MINUTE,
             lookahead: LOOKAHEAD,
             scheduleAheadTime: SCHEDULE_AHEAD_TIME
         };
-    }
-
-    #animateTempoChange() {
-        this.#bpm.className = 'bpm';
-
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                this.#bpm.classList.add('bpm-changed');
-            });
-        });
     }
 
     #saveSettings() {

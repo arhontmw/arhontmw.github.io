@@ -1,4 +1,4 @@
-.modal {
+.bottomsheet {
     display: none;
     position: fixed;
     top: 50%;
@@ -10,13 +10,13 @@
     backdrop-filter: blur(10px);
 }
 
-.modal.modal_visible {
+.bottomsheet.bottomsheet_visible {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.modal-settings-container {
+.bottomsheet-settings-container {
     display: flex;
     flex-direction: column;
 }
