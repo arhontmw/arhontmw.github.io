@@ -6,7 +6,7 @@
     --play-beat-animation-time: 0.1s;
 
     --play-button-background-color: var(--gray);
-    --play-button-background-color-hover: var(--hearts);
+    --play-button-background-color-beat: var(--hearts);
     --play-button-color: var(--white);
 }
 
@@ -56,7 +56,7 @@
 
 @keyframes play-active {
     0% {
-        background-color: var(--play-button-background-color-hover);
+        background-color: var(--play-button-background-color-beat);
     }
     100% {
         background-color: var(--play-button-background-color);

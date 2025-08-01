@@ -63,6 +63,10 @@ body {
     --bpm-background-color: var(--white20);
     --bar-background-color-active: var(--white);
     --pitch-bar-background-color: var(--white73);
+    --play-button-background-color-beat: var(--dark-blue);
+    --bpm-color-changed: var(--dark-blue);
+    --tempo-button-color-active: var(--dark-blue);
+
 }
 
 .app.void-theme {
