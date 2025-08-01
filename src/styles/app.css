@@ -54,13 +54,13 @@ body {
 
 .app.sunset-theme {
     background-image: linear-gradient(to top, #fcc5e4 0%, #fda34b 15%, #ff7882 35%, #c8699e 52%, #7046aa 71%, #0c1db8 87%, #020f75 100%);
-    --bar-background-color: var(--white40);
+    --bar-background-color: var(--white20);
     --play-button-background-color: var(--white40);
     --tempo-button-background-color: var(--white40);
     --reset-button-color: var(--white);
     --bpm-color: var(--white);
-    --beat-animation-container-background-color: var(--white40);
-    --bpm-background-color: var(--white40);
+    --beat-animation-container-background-color: var(--white20);
+    --bpm-background-color: var(--white20);
 }
 
 .app.void-theme {
