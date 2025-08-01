@@ -4,6 +4,7 @@
     /* default-theme */
     --white: #fff;
     --gray: #515151;
+    --gray50: rgba(81, 81, 81, 0.5);
     --gray80: rgba(81, 81, 81, 0.8);
     --light-gray: #ddd;
     --metro-blue: #00B4FF;
@@ -11,6 +12,7 @@
     /* sunset-theme*/
     --white20: rgba(255, 255, 255, 0.2);
     --white40: rgba(255, 255, 255, 0.4);
+    --white73: rgba(255, 255, 255, 0.73);
 
     /* void-theme */
 }

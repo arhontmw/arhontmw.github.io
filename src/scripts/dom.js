@@ -12,7 +12,7 @@ export class PlayerDom {
         this.#playButtonIcon.classList.toggle('play-pause-icon_stop');
     }
 
-    listen(cb) {
+    onClick(cb) {
         this.#playButton.addEventListener('click' , cb);
     }
 
@@ -47,11 +47,11 @@ export class SettingsDom {
         this.#settingsBpmInput.value = tempo;
     }
 
-    setTimeSignature(beats) {
-        this.#timeSignature.innerText = `${beats} / 4`;
+    setTimeSignature(beatsCount) {
+        this.#timeSignature.innerText = `${beatsCount} / 4`;
     }
 
-    listenTempoButtonClick = (cb) => {
+    onTempoButtonClick = (cb) => {
         this.#tempoButtons.forEach((button) => {
             button.addEventListener('click', (event) => {
                 const delta = Number(event.target.dataset.delta || 0);
@@ -61,10 +61,8 @@ export class SettingsDom {
         });
     }
 
-    listenResetButtonClick = (cb) => {
-        this.#resetButton.addEventListener('click', () => {
-            cb();
-        });
+    onResetButtonClick = (cb) => {
+        this.#resetButton.addEventListener('click', cb);
     };
 
     animateTempoChange() {
@@ -78,37 +76,49 @@ export class SettingsDom {
     }
 }
 
-export class VisualizerDom {
+export class BpmVisualizerDom {
     #barsContainer;
     #beatExtraAnimator;
-    #bars;
+    #barDivs;
 
     constructor() {
         this.#barsContainer = document.querySelector('.bars-container');
         this.#beatExtraAnimator = document.querySelector('.beat-extra-animator');
-        this.#bars = [];
+        this.#barDivs = [];
     }
 
-    clearBars() {
+    #clearBars() {
         this.#barsContainer.innerHTML = '';
     }
 
-    setBars(barsCount) {
-        this.clearBars();
+    setBars(bars, getNextPitchOnClickCb) {
+        this.#clearBars();
 
-        this.#bars = new Array(barsCount);
+        this.#barDivs = [];
 
-        for (let i = 0; i < barsCount; i++)  {
-            const div = document.createElement('div');
+        for (const bar of bars)  {
+            const barDiv = document.createElement('div');
+            barDiv.className = 'bar';
+            this.#barsContainer.appendChild(barDiv);
 
-            div.className = 'bar';
+            this.#barDivs.push(barDiv);
+            this.#modifyPitchBarsInBar(barDiv, bar.pitchBarsCount);
 
-            div.addEventListener('click', (event) => {
-                event.target.classList.toggle('bar-muted');
+            barDiv.addEventListener('click', () => {
+                const newPitchBarsCount = getNextPitchOnClickCb(bar);
+                this.#modifyPitchBarsInBar(barDiv, newPitchBarsCount);
             });
+        }
+    }
 
-            this.#barsContainer.appendChild(div);
-            this.#bars[i] = div;
+    #modifyPitchBarsInBar(barElement, pitchBarsCount) {
+        barElement.innerHTML = '';
+
+        for (let i = 0; i < pitchBarsCount; i++) {
+            const pitchBarDiv = document.createElement('div');
+            pitchBarDiv.className = 'pitch-bar';
+
+            barElement.appendChild(pitchBarDiv);
         }
     }
 
@@ -127,20 +137,24 @@ export class VisualizerDom {
         }
     }
 
-    isBarMuted(idx) {
-        return this.#bars[idx].classList.contains('bar-muted');
-    }
+    barPulse = ({ beatNumber: idx }) => {
+        this.#barDivs.forEach((bar) => {
+            bar.classList.remove('bar-active');
 
-    barPulse = ({ beatNumber: idx, time, beats }) => {
-        this.#bars.forEach((bar) => {
-            bar.classList.remove('bar-active')
+            [...bar.children].forEach((pitchBar) => {
+                pitchBar.classList.remove('pitch-bar-active');
+            });
         });
 
-        const currentBar = this.#bars[idx];
+        const currentBar = this.#barDivs[idx];
 
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 currentBar.classList.add('bar-active');
+
+                [...currentBar.children].forEach((pitchBar) => {
+                    pitchBar.classList.add('pitch-bar-active');
+                });
             });
         });
     }

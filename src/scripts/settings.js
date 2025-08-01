@@ -1,11 +1,16 @@
 import { Storage } from './utils.js';
+import { PITCH } from './constants.js';
 
 const DEFAULT_TEMPO = 120;
-const DEFAULT_BEATS = 4;
+const DEFAULT_BEATS = [
+    { idx: 0, pitch: PITCH.ACCENT },
+    { idx: 1, pitch: PITCH.ORDINARY },
+    { idx: 2, pitch: PITCH.ORDINARY },
+    { idx: 3, pitch: PITCH.ORDINARY }
+];
 const DEFAULT_NOTE_VALUE = 4;
-const SECONDS_IN_MINUTE = 60;
-const LOOKAHEAD = 25; // ms
-const SCHEDULE_AHEAD_TIME = 0.1; // sec
+const MIN_TEMPO = 20;
+const MAX_TEMPO = 600;
 
 export const SETTINGS_KEY = 'metronome-settings';
 
@@ -39,25 +44,42 @@ export class Settings {
     init() {
         const settings = this.#getSettings();
 
-        this.#metronome.setOptions(settings);
-        this.#visr.setOptions(settings)
+        this.#metronome.init(settings);
+        this.#visr.init(settings, this.#onOptionsChangeCb)
 
         this.#setBpm(this.#tempo);
-        this.#setTimeSignature(this.#beats);
+        this.#setTimeSignature(this.#beats.length);
         this.#listen();
     }
+
+    #onOptionsChangeCb = ({ beat }) => {
+        if (beat) {
+            const { idx, pitch } = beat;
+
+            this.#beats[idx].pitch = pitch;
+        }
+    };
 
     #setBpm(tempo) {
         this.#dom.setBpm(tempo);
     }
 
-    #setTimeSignature(beats) {
-        this.#dom.setTimeSignature(beats);
+    #setTimeSignature(beatsCount) {
+        this.#dom.setTimeSignature(beatsCount);
     }
 
     #listen() {
-        this.#dom.listenTempoButtonClick(({ delta }) => {
-            this.#tempo += delta;
+        this.#dom.onTempoButtonClick(({ delta }) => {
+            const newTempo = this.#tempo + delta;
+
+            if (newTempo < MIN_TEMPO) {
+                this.#tempo = MIN_TEMPO;
+            } else if (newTempo > MAX_TEMPO) {
+                this.#tempo = MAX_TEMPO;
+            } else {
+                this.#tempo = newTempo;
+            }
+
             this.#updateSettings();
         });
 
@@ -65,7 +87,7 @@ export class Settings {
         //     console.log(e.target.value);
         // });
 
-        this.#dom.listenResetButtonClick(() => {
+        this.#dom.onResetButtonClick(() => {
             this.#tempo = DEFAULT_TEMPO;
             this.#updateSettings();
         });
@@ -87,9 +109,6 @@ export class Settings {
             tempo: this.#tempo,
             beats: this.#beats,
             noteValue: this.#noteValue,
-            secondsInMinute: SECONDS_IN_MINUTE,
-            lookahead: LOOKAHEAD,
-            scheduleAheadTime: SCHEDULE_AHEAD_TIME
         };
     }
 

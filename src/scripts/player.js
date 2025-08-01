@@ -1,3 +1,5 @@
+import { PITCH } from './constants.js';
+
 export class Player {
     #dom;
     #playing;
@@ -25,8 +27,8 @@ export class Player {
         return this.#playing;
     }
 
-    listen(cb) {
-        this.#dom.listen(cb);
+    onClick(cb) {
+        this.#dom.onClick(cb);
     }
 
     setPlaySoundMethod(method) {
@@ -37,16 +39,20 @@ export class Player {
         }
     }
 
-    playSound({ beatNumber, time, beats }) {
+    playSound({ time, pitch }) {
         this.#dom.animatePlayButton();
-        this.#playSoundMethod({ beatNumber, time, beats });
+        this.#playSoundMethod({ time, pitch });
     }
 
-    #playOscillator({ beatNumber, time, beats }) {
+    #playOscillator({ time, pitch }) {
+        if (pitch === PITCH.MUTED) {
+            return;
+        }
+
         const osc = this.#ctx.createOscillator();
         const envelope = this.#ctx.createGain();
 
-        osc.frequency.value = (beatNumber % beats === 0) ? 1200 : 800;
+        osc.frequency.value = pitch === PITCH.ACCENT ? 1200 : 800;
         envelope.gain.value = 1;
         envelope.gain.exponentialRampToValueAtTime(1, time + 0.001);
         envelope.gain.exponentialRampToValueAtTime(0.001, time + 0.02);

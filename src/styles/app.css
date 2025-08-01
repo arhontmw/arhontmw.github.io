@@ -2,7 +2,7 @@
 @import url("./bottomsheet.css");
 @import url("./play.css");
 @import url("./settings.css");
-@import url("./visualizer.css");
+@import url("./bpm-visualizer.css");
 
 * {
     margin: 0;
@@ -61,6 +61,8 @@ body {
     --bpm-color: var(--white);
     --beat-animation-container-background-color: var(--white20);
     --bpm-background-color: var(--white20);
+    --bar-background-color-active: var(--white);
+    --pitch-bar-background-color: var(--white73);
 }
 
 .app.void-theme {

@@ -1,11 +1,11 @@
 import { Metronome } from './metronome.js';
 import { Player } from './player.js';
-import { Visualizer } from './visualizer.js';
+import { BpmVisualizer } from './bpm-visualizer.js';
 import { Settings, SETTINGS_KEY } from './settings.js';
 import {
     PlayerDom,
     SettingsDom,
-    VisualizerDom
+    BpmVisualizerDom
 } from './dom.js';
 import { initWakeLock } from './wake-lock.js';
 import { initVibration } from './vibration.js';
@@ -14,8 +14,8 @@ import { Storage } from './utils.js';
 const retrieveSavedSettings = () => Storage.read(SETTINGS_KEY) || {};
 
 function init() {
-    const visualizerDom = new VisualizerDom();
-    const visualizer = new Visualizer(visualizerDom);
+    const bpmVisualizerDom = new BpmVisualizerDom();
+    const bpmVisualizer = new BpmVisualizer(bpmVisualizerDom);
 
     const audioContext = new AudioContext();
     const playerDom = new PlayerDom();
@@ -23,7 +23,7 @@ function init() {
 
     const metronome = new Metronome(
         audioContext,
-        visualizer,
+        bpmVisualizer,
         player
     );
 
@@ -32,7 +32,7 @@ function init() {
     const settings = new Settings(
         settingsDom,
         metronome,
-        visualizer,
+        bpmVisualizer,
         player,
         savedSettings
     );
@@ -41,8 +41,8 @@ function init() {
     initWakeLock();
     initVibration();
 
-    player.listen(() => {
-        visualizer.toggleBeatExtraAnimator({
+    player.onClick(() => {
+        bpmVisualizer.toggleBeatExtraAnimator({
             shouldPause: player.isPlaying(),
             duration: metronome.getSecondsPerBeat()
         });

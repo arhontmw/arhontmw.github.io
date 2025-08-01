@@ -1,10 +1,13 @@
+import {
+    SECONDS_IN_MINUTE,
+    LOOKAHEAD,
+    SCHEDULE_AHEAD_TIME
+} from './constants.js';
+
 export class Metronome {
     #ctx;
     #visr;
     #player;
-    #secondsInMinute;
-    #lookahead;
-    #scheduleAheadTime;
     #tempo;
     #beats;
     #noteValue;
@@ -26,21 +29,14 @@ export class Metronome {
         this.#reset();
     }
 
-    setOptions(options) {
+    init(options) {
         const {
             tempo,
             beats,
             noteValue,
-            secondsInMinute,
-            lookahead,
-            scheduleAheadTime
         } = options;
 
         this.#inited = true;
-
-        this.#secondsInMinute = secondsInMinute;
-        this.#lookahead = lookahead;
-        this.#scheduleAheadTime = scheduleAheadTime;
 
         this.#tempo = tempo;
         // beats / noteValue - eg. 4 / 4
@@ -58,25 +54,26 @@ export class Metronome {
     }
 
     #schedule() {
-        while (this.#nextNoteTime < this.#ctx.currentTime + this.#scheduleAheadTime) {
-            this.#playNote(this.#noteIdx, this.#nextNoteTime);
+        while (this.#nextNoteTime < this.#ctx.currentTime + SCHEDULE_AHEAD_TIME) {
+            this.#playNote({
+                pitch: this.#beats[this.#noteIdx].pitch,
+                beatNumber: this.#noteIdx,
+                time: this.#nextNoteTime
+            });
             this.#nextNote();
         }
     }
 
-    #playNote(beatNumber, time) {
-        if (!this.#visr.isBarMuted(beatNumber)) {
-            this.#player.playSound({ beatNumber, time, beats: this.#beats });
-        }
-
-        this.#visr.activate({ beatNumber, time, beats: this.#beats });
+    #playNote({ beatNumber, pitch, time }) {
+        this.#player.playSound({ time, pitch });
+        this.#visr.activate({ beatNumber });
     }
 
     #nextNote() {
         const secondsPerBeat = this.getSecondsPerBeat();
 
         this.#nextNoteTime += secondsPerBeat;
-        this.#noteIdx = (this.#noteIdx + 1) % this.#beats;
+        this.#noteIdx = (this.#noteIdx + 1) % this.#beats.length;
     }
 
     #start() {
@@ -89,7 +86,7 @@ export class Metronome {
         this.#isRunning = true;
         this.#nextNoteTime = this.#ctx.currentTime + 0.05;
 
-        this.#intervalId = setInterval(() => this.#schedule(), this.#lookahead);
+        this.#intervalId = setInterval(() => this.#schedule(), LOOKAHEAD);
     }
 
     #stop() {
@@ -127,6 +124,6 @@ export class Metronome {
     }
 
     getSecondsPerBeat() {
-        return this.#secondsInMinute / this.#tempo;
+        return SECONDS_IN_MINUTE / this.#tempo;
     }
 }

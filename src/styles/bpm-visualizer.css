@@ -8,6 +8,10 @@
     --bar-border-color: var(--gray50);
     --bar-background-color: var(--gray50);
     --bar-background-color-active: var(--metro-blue);
+    --bar-padding: 3px;
+
+    --pitch-bar-background-color: var(--gray);
+    --pitch-bar-background-color-active: var(--metro-blue);
 
     --beat-extra-width: 1rem;
     --beat-extra-animator-background-color: var(--metro-blue);
@@ -15,7 +19,7 @@
     --beat-animation-container-background-color: var(--gray50);
 }
 
-.visualization-container {
+.bpm-visualizer-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,19 +39,24 @@
     border-radius: var(--bar-radius);
     background-color: var(--bar-background-color);
     border: 1px solid var(--bar-background-color);
+    display: flex;
+    flex-direction: column-reverse;
+    padding: var(--bar-padding);
+    gap: 0.2rem;
 }
 
-.bar-muted {
-    background-color: transparent;
-    border: 1px solid var(--bar-background-color);
-}
-
-.bar-active.bar-muted {
-    animation: bar-muted var(--beat-animation-time);
-}
-
-.bar-active:not(.bar-muted) {
+.bar-active {
     animation: bar-active var(--beat-animation-time);
+}
+
+.pitch-bar {
+    border-radius: var(--bar-radius);
+    background-color: var(--pitch-bar-background-color);
+    height: 50%;
+}
+
+.pitch-bar-active {
+    animation: pitch-bar-active var(--beat-animation-time);
 }
 
 .beat-animation-container {
@@ -84,13 +93,13 @@
     }
 }
 
-@keyframes bar-muted {
+@keyframes pitch-bar-active {
     0% {
-        background-color: var(--bar-background-color-active);
+        background-color: var(--pitch-bar-background-color-active);
     }
 
     100% {
-        background-color: transparent;
+        background-color: var(--pitch-bar-background-color);
     }
 }
 
