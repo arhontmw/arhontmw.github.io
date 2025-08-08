@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "short_name": "Metronome",
     "start_url": ".",
+    "lang": "en",
     "display": "standalone",
     "background_color": "#ffffff",
     "description": "Simple fast-loading metronome to train your rhythm and music skills",
