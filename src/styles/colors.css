@@ -7,13 +7,13 @@
     --gray50: rgba(81, 81, 81, 0.5);
     --gray80: rgba(81, 81, 81, 0.8);
     --light-gray: #ddd;
-    --metro-blue: #00B4FF;
+    --metro-blue: rgb(0, 180, 255);
 
     /* sunset-theme*/
     --white20: rgba(255, 255, 255, 0.2);
     --white40: rgba(255, 255, 255, 0.4);
     --white73: rgba(255, 255, 255, 0.73);
-    --dark-blue: #030f76;
-
+    --dark-blue: rgb(3, 15, 118);
+    --black20: rgba(0, 0, 0, 0.2);
     /* void-theme */
 }

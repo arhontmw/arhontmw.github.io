@@ -5,10 +5,12 @@ import { Settings, SETTINGS_KEY } from './settings.js';
 import {
     PlayerDom,
     SettingsDom,
-    BpmVisualizerDom
+    BpmVisualizerDom,
+    SettingsBpmDom
 } from './dom.js';
 import { initWakeLock } from './wake-lock.js';
 import { initVibration } from './vibration.js';
+import { initBottomsheetManager } from './bottomsheet.js';
 import { Storage } from './utils.js';
 
 const retrieveSavedSettings = () => Storage.read(SETTINGS_KEY) || {};
@@ -27,10 +29,12 @@ function init() {
         player
     );
 
+    const settingsBpmDom = new SettingsBpmDom();
     const settingsDom = new SettingsDom();
     const savedSettings = retrieveSavedSettings();
     const settings = new Settings(
         settingsDom,
+        settingsBpmDom,
         metronome,
         bpmVisualizer,
         player,
@@ -40,6 +44,7 @@ function init() {
     settings.init();
     initWakeLock();
     initVibration();
+    initBottomsheetManager();
 
     player.onClick(() => {
         bpmVisualizer.toggleBeatExtraAnimator({

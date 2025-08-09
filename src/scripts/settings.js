@@ -1,5 +1,5 @@
 import { Storage } from './utils.js';
-import { PITCH } from './constants.js';
+import { PITCH, MAX_TEMPO, MIN_TEMPO } from './constants.js';
 
 const DEFAULT_TEMPO = 120;
 const DEFAULT_BEATS = [
@@ -9,13 +9,12 @@ const DEFAULT_BEATS = [
     { idx: 3, pitch: PITCH.ORDINARY }
 ];
 const DEFAULT_NOTE_VALUE = 4;
-const MIN_TEMPO = 20;
-const MAX_TEMPO = 600;
 
 export const SETTINGS_KEY = 'metronome-settings';
 
 export class Settings {
     #dom;
+    #settingsBpmDom;
     #metronome;
     #visr;
     #tempo;
@@ -23,8 +22,9 @@ export class Settings {
     #noteValue;
     #player;
 
-    constructor(dom, metronome, visr, player, savedSettings) {
+    constructor(dom, settingsBpmDom, metronome, visr, player, savedSettings) {
         this.#dom = dom;
+        this.#settingsBpmDom = settingsBpmDom;
 
         this.#metronome = metronome;
         this.#visr = visr;
@@ -83,13 +83,18 @@ export class Settings {
             this.#updateSettings();
         });
 
-        // this.#settingsBpmInput.addEventListener('input', (e) => {
-        //     console.log(e.target.value);
-        // });
+        this.#dom.onBpmButtonClick(() => {
+            this.#settingsBpmDom.setSettingsBpm(this.#tempo);
+            this.#dom.openBottomSheet();
+        });
 
         this.#dom.onResetButtonClick(() => {
             this.#tempo = DEFAULT_TEMPO;
             this.#updateSettings();
+        });
+
+        this.#settingsBpmDom.listen((newBpm) => {
+            // if
         });
     }
 

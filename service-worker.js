@@ -19,6 +19,7 @@ const ASSETS = [
   '/src/styles/settings.css',
   // scripts
   '/src/scripts/app.js',
+  '/src/scripts/bottomsheet.js',
   '/src/scripts/bpm-visualizer.js',
   '/src/scripts/constants.js',
   '/src/scripts/dom.js',

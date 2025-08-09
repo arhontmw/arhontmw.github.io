@@ -14,6 +14,10 @@
     --tempo-button-height: 4rem;
 
     --reset-button-color: var(--gray);
+
+    --settings-bpm-label: var(--white);
+    --settings-bpm-input-background-color: var(--black20);
+    --settings-bpm-input-color: var(--white);
 }
 
 .tempo-button-container {
@@ -89,6 +93,33 @@
 
 .bpm-changed {
     animation: bpm-changed var(--bpm-changed-animation-time);
+}
+
+.bottomsheet-bpm-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0;
+    width: 100%;
+}
+
+.settings-bpm-input-label {
+    color: var(--settings-bpm-label);
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.settings-bpm-input {
+    text-align: center;
+    font-size: 2rem;
+    min-width: 30%;
+    max-width: 30%;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--settings-bpm-input-background-color);
+    color: var(--settings-bpm-input-color);
 }
 
 @keyframes bpm-changed {

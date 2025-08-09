@@ -1,3 +1,5 @@
+import { BOTTOMSHEET_VISIBILITY_EVENT, MAX_TEMPO, MIN_TEMPO } from './constants.js';
+
 export class PlayerDom {
     #playButton;
     #playButtonIcon;
@@ -59,7 +61,11 @@ export class SettingsDom {
                 cb({ delta });
             });
         });
-    }
+    };
+
+    onBpmButtonClick = (cb) => {
+        this.#bpm.addEventListener('click', cb);
+    };
 
     onResetButtonClick = (cb) => {
         this.#resetButton.addEventListener('click', cb);
@@ -73,6 +79,10 @@ export class SettingsDom {
                 this.#bpm.classList.add('bpm-changed');
             });
         });
+    }
+
+    openBottomSheet() {
+        dispatchOpenBottomSheet();
     }
 }
 
@@ -160,3 +170,77 @@ export class BpmVisualizerDom {
     }
 }
 
+export class SettingsBpmDom {
+    #bpmInput;
+    #saveButton;
+    #cancelButton;
+    #isBpmInputValid = true;
+
+    constructor() {
+        this.#bpmInput = document.querySelector('.settings-bpm-input');
+        this.#saveButton = document.querySelector('.bottomsheet-control-save-button');
+        this.#cancelButton = document.querySelector('.bottomsheet-control-close-button');
+    }
+
+    setSettingsBpm(bpm) {
+        this.#bpmInput.value = bpm;
+    }
+
+    listen(onBpmChange) {
+        this.#bpmInput.addEventListener('input', (event) => {
+            const { value } = event.target;
+
+            if (!validateBpm(value)) {
+                this.#updateBpmControls({ isValid: false });
+                return;
+            }
+
+            this.#updateBpmControls({ isValid: true });
+        });
+
+        this.#saveButton.addEventListener('click', () => {
+            console.log('### SAVE');
+        });
+
+        this.#cancelButton.addEventListener('click', dispatchCloseBottomSheet);
+    }
+
+    #updateBpmControls({ isValid }) {
+        this.#isBpmInputValid = isValid;
+        this.#saveButton.disabled = !isValid;
+
+        if (isValid) {
+            this.#saveButton.classList.remove('bottomsheet-control-button_disabled')
+        } else {
+            this.#saveButton.classList.add('bottomsheet-control-button_disabled')
+        }
+    }
+}
+
+const dispatchOpenBottomSheet = () => {
+    dispatchEvent(BOTTOMSHEET_VISIBILITY_EVENT, { status: 'open' });
+};
+
+const dispatchCloseBottomSheet = () => {
+    dispatchEvent(BOTTOMSHEET_VISIBILITY_EVENT, { status: 'close' });
+};
+
+const dispatchEvent = (eventName, detail) => {
+    const event = new CustomEvent(eventName, {
+        detail,
+        bubbles: true,
+        cancelable: true
+    });
+
+    document.dispatchEvent(event);
+};
+
+function validateBpm(value) {
+    const bpm = parseInt(value);
+
+    if (Number.isNaN(bpm)) {
+        return false;
+    }
+
+    return bpm >= MIN_TEMPO && bpm <= MAX_TEMPO;
+}

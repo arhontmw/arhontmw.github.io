@@ -10,6 +10,7 @@
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     overscroll-behavior-y: contain;
+    user-select: none;
 }
 
 button {

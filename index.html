@@ -10,7 +10,7 @@
     <link rel="manifest" href="./manifest.json">
     <link rel="stylesheet" href="./src/styles/app.css">
 </head>
-<body ontouchstart=""><!-- fix iOS -->
+<body ontouchstart="">
     <div class="app sunset-theme">
         <div class="bpm-visualizer-container">
             <div class="bars-container"></div>
@@ -47,11 +47,18 @@
         <div class="footer-settings-container">
             <button class="reset-button" data-vibro="1">RESET BPM</button>
         </div>
-        <div class="bottomsheet bpm-settings">
-            <div class="bottomsheet-settings-container">
-                <label class="settings-bpm-input-label" for="bpm-input">ENTER BPM (20-600)</label>
-                <input class="settings-bpm-input" type="number" id="bpm-input" min="20" max="600">
-                <button class="save-button" data-vibro="1">SAVE</button>
+        <div class="bottomsheet-wrapper">
+            <div class="bottomsheet">
+                <div class="bottomsheet-settings-container">
+                    <div class="bottomsheet-bpm-slot">
+                        <label class="settings-bpm-input-label" for="bpm-input">ENTER BPM</label>
+                        <input class="settings-bpm-input" type="number" id="bpm-input" min="20" max="600">
+                    </div>
+                    <div class="bottomsheet-control-buttons">
+                        <button class="bottomsheet-control-button bottomsheet-control-close-button" data-vibro="1">CLOSE</button>
+                        <button class="bottomsheet-control-button bottomsheet-control-save-button" data-vibro="1">SAVE</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
