@@ -1,5 +1,6 @@
 :root {
     --bottomsheet-control-button-color: var(--white);
+    --bottomsheet-control-button-color_disabled: var(--white40);
     --bottomsheet-control-button-background-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -56,7 +57,7 @@
 }
 
 .bottomsheet-control-button_disabled {
-
+    color: var(--bottomsheet-control-button-color_disabled);
 }
 
 .bottomsheet-control-button:not(.bottomsheet-control-button_disabled):active {

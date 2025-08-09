@@ -10,7 +10,7 @@ import {
 } from './dom.js';
 import { initWakeLock } from './wake-lock.js';
 import { initVibration } from './vibration.js';
-import { initBottomsheetManager } from './bottomsheet.js';
+import { initBottomsheetManager } from './bottomsheet-manager.js';
 import { Storage } from './utils.js';
 
 const retrieveSavedSettings = () => Storage.read(SETTINGS_KEY) || {};
