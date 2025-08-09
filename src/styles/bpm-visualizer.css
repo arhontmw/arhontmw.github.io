@@ -5,18 +5,17 @@
     --bar-height: 14dvh;
     --bar-radius: 6px;
 
-    --bar-border-color: var(--gray50);
-    --bar-background-color: var(--gray50);
-    --bar-background-color-active: var(--metro-blue);
+    --bar-background-color: var(--white20);
+    --bar-background-color-active: var(--white);
     --bar-padding: 3px;
 
-    --pitch-bar-background-color: var(--gray);
+    --pitch-bar-background-color: var(--white73);
     --pitch-bar-background-color-active: var(--metro-blue);
 
     --beat-extra-width: 1rem;
     --beat-extra-animator-background-color: var(--metro-blue);
 
-    --beat-animation-container-background-color: var(--gray50);
+    --beat-animation-container-background-color: var(--white20);
 }
 
 .bpm-visualizer-container {

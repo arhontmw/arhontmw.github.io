@@ -5,8 +5,8 @@
 
     --play-beat-animation-time: 0.1s;
 
-    --play-button-background-color: var(--gray);
-    --play-button-background-color-beat: var(--hearts);
+    --play-button-background-color: var(--white40);
+    --play-button-background-color-beat: var(--dark-blue);
     --play-button-color: var(--white);
 }
 

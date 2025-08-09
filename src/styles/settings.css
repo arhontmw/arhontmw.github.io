@@ -3,17 +3,17 @@
 
     --bpm-font-size: 2rem;
     --bpm-changed-animation-time: 1s;
-    --bpm-color: var(--gray);
-    --bpm-background-color: transparent;
-    --bpm-color-changed: var(--hearts);
+    --bpm-color: var(--white);
+    --bpm-background-color: var(--white20);
+    --bpm-color-changed: var(--dark-blue);
 
-    --tempo-button-background-color: var(--gray);
+    --tempo-button-background-color: var(--white40);
     --tempo-button-color: var(--white);
-    --tempo-button-color-active: var(--hearts);
+    --tempo-button-color-active: var(--dark-blue);
     --tempo-button-width: 4rem;
     --tempo-button-height: 4rem;
 
-    --reset-button-color: var(--gray);
+    --reset-button-color: var(--white);
 
     --settings-bpm-label: var(--white);
     --settings-bpm-input-background-color: var(--black20);
