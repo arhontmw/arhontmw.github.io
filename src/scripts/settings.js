@@ -94,7 +94,8 @@ export class Settings {
         });
 
         this.#settingsBpmDom.listen((newBpm) => {
-            // if
+            this.#tempo = newBpm;
+            this.#updateSettings();
         });
     }
 

@@ -174,7 +174,7 @@ export class SettingsBpmDom {
     #bpmInput;
     #saveButton;
     #cancelButton;
-    #isBpmInputValid = true;
+    #bpmValue = null;
 
     constructor() {
         this.#bpmInput = document.querySelector('.settings-bpm-input');
@@ -190,23 +190,32 @@ export class SettingsBpmDom {
         this.#bpmInput.addEventListener('input', (event) => {
             const { value } = event.target;
 
-            if (!validateBpm(value)) {
+            const bpm = parseInt(value);
+
+            if (!validateBpm(bpm)) {
                 this.#updateBpmControls({ isValid: false });
                 return;
             }
 
             this.#updateBpmControls({ isValid: true });
+            this.#bpmValue = bpm;
         });
 
         this.#saveButton.addEventListener('click', () => {
-            console.log('### SAVE');
+            if (this.#bpmValue) {
+                onBpmChange(this.#bpmValue);
+                this.#bpmValue = null;
+                dispatchCloseBottomSheet();
+            }
         });
 
-        this.#cancelButton.addEventListener('click', dispatchCloseBottomSheet);
+        this.#cancelButton.addEventListener('click', () => {
+            dispatchCloseBottomSheet();
+            this.#bpmValue = null;
+        });
     }
 
     #updateBpmControls({ isValid }) {
-        this.#isBpmInputValid = isValid;
         this.#saveButton.disabled = !isValid;
 
         if (isValid) {
@@ -235,9 +244,7 @@ const dispatchEvent = (eventName, detail) => {
     document.dispatchEvent(event);
 };
 
-function validateBpm(value) {
-    const bpm = parseInt(value);
-
+function validateBpm(bpm) {
     if (Number.isNaN(bpm)) {
         return false;
     }
