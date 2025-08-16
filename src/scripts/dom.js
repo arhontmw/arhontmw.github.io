@@ -183,7 +183,14 @@ export class SettingsBpmDom {
     }
 
     setSettingsBpm(bpm) {
-        this.#bpmInput.value = bpm;
+        const isBpmValid = validateBpm(bpm);
+
+        if (isBpmValid) {
+            this.#bpmInput.value = bpm;
+            return;
+        }
+
+        this.#updateBpmControls({ isBpmValid });
     }
 
     listen(onBpmChange) {
@@ -193,11 +200,11 @@ export class SettingsBpmDom {
             const bpm = parseInt(value);
 
             if (!validateBpm(bpm)) {
-                this.#updateBpmControls({ isValid: false });
+                this.#updateBpmControls({ isBpmValid: false });
                 return;
             }
 
-            this.#updateBpmControls({ isValid: true });
+            this.#updateBpmControls({ isBpmValid: true });
             this.#bpmValue = bpm;
         });
 
@@ -215,10 +222,10 @@ export class SettingsBpmDom {
         });
     }
 
-    #updateBpmControls({ isValid }) {
-        this.#saveButton.disabled = !isValid;
+    #updateBpmControls({ isBpmValid }) {
+        this.#saveButton.disabled = !isBpmValid;
 
-        if (isValid) {
+        if (isBpmValid) {
             this.#saveButton.classList.remove('bottomsheet-control-button_disabled')
         } else {
             this.#saveButton.classList.add('bottomsheet-control-button_disabled')
