@@ -18,6 +18,12 @@
     --settings-bpm-label: var(--white);
     --settings-bpm-input-background-color: var(--black20);
     --settings-bpm-input-color: var(--white);
+
+    --settings-time-signature-title-color: var(--white);
+
+    --settings-output-window-color: var(--white);
+    --settings-output-window-background-color: var(--black20);
+    --settings-divider-window-color: var(--white);
 }
 
 .tempo-button-container {
@@ -95,12 +101,37 @@
     animation: bpm-changed var(--bpm-changed-animation-time);
 }
 
-.bottomsheet-bpm-slot {
+.bottomsheet-bpm-controls {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 12px 0;
     width: 100%;
+}
+
+.bottomsheet-time-signature-controls {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 32px;
+}
+
+.settings-output-window {
+    font-size: 2rem;
+    color: var(--settings-output-window-color);
+    text-align: center;
+    border-radius: 6px;
+    background-color: var(--settings-output-window-background-color);
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.settings-time-signature-divider {
+    font-size: 2.5rem;
+    color: var(--settings-divider-window-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .settings-bpm-input-label {
@@ -109,6 +140,14 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 24px;
+}
+
+.settings-time-signature-title {
+    color: var(--settings-bpm-label);
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 32px;
 }
 
 .settings-bpm-input {
@@ -131,3 +170,4 @@
         color: var(--bpm-color);
     }
 }
+

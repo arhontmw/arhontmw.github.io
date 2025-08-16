@@ -1,4 +1,8 @@
-import { BOTTOMSHEET_VISIBILITY_EVENT, MAX_TEMPO, MIN_TEMPO } from './constants.js';
+import {
+    BOTTOMSHEET_VISIBILITY_EVENT,
+    MAX_TEMPO,
+    MIN_TEMPO
+} from './constants.js';
 
 export class PlayerDom {
     #playButton;
@@ -49,8 +53,8 @@ export class SettingsDom {
         this.#settingsBpmInput.value = tempo;
     }
 
-    setTimeSignature(beatsCount) {
-        this.#timeSignature.innerText = `${beatsCount} / 4`;
+    setTimeSignature(beatsCount, noteValue) {
+        this.#timeSignature.innerText = `${beatsCount} / ${noteValue}`;
     }
 
     onTempoButtonClick = (cb) => {
@@ -67,6 +71,10 @@ export class SettingsDom {
         this.#bpm.addEventListener('click', cb);
     };
 
+    onTimeSignatureButtonClick = (cb) => {
+        this.#timeSignature.addEventListener('click', cb);
+    }
+
     onResetButtonClick = (cb) => {
         this.#resetButton.addEventListener('click', cb);
     };
@@ -81,8 +89,8 @@ export class SettingsDom {
         });
     }
 
-    openBottomSheet() {
-        dispatchOpenBottomSheet();
+    openBottomSheet(type) {
+        dispatchOpenBottomSheet(type);
     }
 }
 
@@ -178,8 +186,8 @@ export class SettingsBpmDom {
 
     constructor() {
         this.#bpmInput = document.querySelector('.settings-bpm-input');
-        this.#saveButton = document.querySelector('.bottomsheet-control-save-button');
-        this.#cancelButton = document.querySelector('.bottomsheet-control-close-button');
+        this.#saveButton = document.querySelector('.bpm-controls > .bottomsheet-control-save-button');
+        this.#cancelButton = document.querySelector('.bpm-controls > .bottomsheet-control-close-button');
     }
 
     setSettingsBpm(bpm) {
@@ -190,7 +198,7 @@ export class SettingsBpmDom {
             return;
         }
 
-        this.#updateBpmControls({ isBpmValid });
+        this.#updateControls({ isBpmValid });
     }
 
     listen(onBpmChange) {
@@ -200,11 +208,11 @@ export class SettingsBpmDom {
             const bpm = parseInt(value);
 
             if (!validateBpm(bpm)) {
-                this.#updateBpmControls({ isBpmValid: false });
+                this.#updateControls({ isBpmValid: false });
                 return;
             }
 
-            this.#updateBpmControls({ isBpmValid: true });
+            this.#updateControls({ isBpmValid: true });
             this.#bpmValue = bpm;
         });
 
@@ -222,7 +230,7 @@ export class SettingsBpmDom {
         });
     }
 
-    #updateBpmControls({ isBpmValid }) {
+    #updateControls({ isBpmValid }) {
         this.#saveButton.disabled = !isBpmValid;
 
         if (isBpmValid) {
@@ -233,8 +241,116 @@ export class SettingsBpmDom {
     }
 }
 
-const dispatchOpenBottomSheet = () => {
-    dispatchEvent(BOTTOMSHEET_VISIBILITY_EVENT, { status: 'open' });
+export class SettingsTsDom {
+    #beatsUpButton;
+    #beatsDownButton;
+    #notevalueUpButton;
+    #notevalueDownButton;
+    #outputWindowBeats;
+    #outputWindowNoteValue;
+    #beatsCount = null;
+    #noteValue = null;
+
+
+    constructor() {
+        this.#beatsUpButton = document.querySelector('.beats-up');
+        this.#beatsDownButton = document.querySelector('.beats-down');
+        this.#notevalueUpButton = document.querySelector('.notevalue-up');
+        this.#notevalueDownButton = document.querySelector('.notevalue-down');
+        this.#outputWindowBeats = document.querySelector('.settings-output-window-beats');
+        this.#outputWindowNoteValue = document.querySelector('.settings-output-window-notevalue');
+    }
+
+    setSettingsTimeSignature(beatsCount, noteValue) {
+        this.#beatsCount = beatsCount;
+        this.#noteValue = noteValue;
+        this.#outputWindowBeats.textContent = beatsCount;
+        this.#outputWindowNoteValue.textContent = noteValue;
+
+        this.#updateControlsVisibility();
+    }
+
+    listen(onTsChange) {
+        this.#beatsUpButton.addEventListener('click', () => {
+            this.#updateBeatsCount(this.#beatsCount + 1, onTsChange);
+        });
+
+        this.#beatsDownButton.addEventListener('click', () => {
+            this.#updateBeatsCount(this.#beatsCount - 1, onTsChange);
+        });
+
+        this.#notevalueUpButton.addEventListener('click', () => {
+            this.#updateNoteValue(this.#noteValue * 2, onTsChange);
+        });
+
+        this.#notevalueDownButton.addEventListener('click', () => {
+            this.#updateNoteValue(Math.floor(this.#noteValue / 2), onTsChange);
+        });
+    }
+
+    #updateBeatsCount(newBeatsCount, onTsChange) {
+        if (validateBeatsCount(newBeatsCount)) {
+            this.#beatsCount = newBeatsCount;
+            this.#outputWindowBeats.innerText = newBeatsCount;
+            onTsChange({ newBeatsCount });
+            this.#updateControlsVisibility();
+        }
+    }
+
+    #updateNoteValue(newNoteValue, onTsChange) {
+        if (validateNoteValue(newNoteValue)) {
+            this.#noteValue = newNoteValue;
+            this.#outputWindowNoteValue.innerText = newNoteValue;
+            onTsChange({ newNoteValue });
+            this.#updateControlsVisibility();
+        }
+    }
+
+    #updateControlsVisibility() {
+        if (validateBeatsCountIsMax(this.#beatsCount)) {
+            this.#beatsUpButton.classList.add('button-hidden')
+        } else if (validateBeatsCountIsMin(this.#beatsCount)) {
+            this.#beatsDownButton.classList.add('button-hidden');
+        } else {
+            this.#beatsUpButton.classList.remove('button-hidden');
+            this.#beatsDownButton.classList.remove('button-hidden');
+        }
+
+        if (validateNoteValueIsMax(this.#noteValue)) {
+            this.#notevalueUpButton.classList.add('button-hidden');
+        } else if (validateNoteValueIsMin(this.#noteValue)) {
+            this.#notevalueDownButton.classList.add('button-hidden');
+        } else {
+            this.#notevalueUpButton.classList.remove('button-hidden');
+            this.#notevalueDownButton.classList.remove('button-hidden');
+        }
+    }
+}
+
+const MAX_BEATS_COUNT = 16;
+const MIN_BEATS_COUNT = 1;
+const validateBeatsCountIsMax = (beats) => beats === MAX_BEATS_COUNT;
+const validateBeatsCountIsMin = (beats) => beats === MIN_BEATS_COUNT;
+const validateBeatsCount = (beats) => beats >= MIN_BEATS_COUNT && beats <= MAX_BEATS_COUNT;
+
+const MAX_NOTE_VALUE = 32;
+const MIN_NOTE_VALUE = 1;
+const NOTE_VALUES = [MIN_NOTE_VALUE, 2, 4, 8, 16, MAX_NOTE_VALUE];
+const validateNoteValueIsMax = (noteValue) => noteValue === MAX_NOTE_VALUE;
+const validateNoteValueIsMin = (noteValue) => noteValue === MIN_NOTE_VALUE;
+const validateNoteValue = (noteValue) => NOTE_VALUES.includes(noteValue);
+
+const validateBpm = (bpm) => {
+    if (Number.isNaN(bpm)) {
+        return false;
+    }
+
+    return bpm >= MIN_TEMPO && bpm <= MAX_TEMPO;
+};
+
+
+const dispatchOpenBottomSheet = (type) => {
+    dispatchEvent(BOTTOMSHEET_VISIBILITY_EVENT, { status: 'open', type });
 };
 
 const dispatchCloseBottomSheet = () => {
@@ -250,11 +366,3 @@ const dispatchEvent = (eventName, detail) => {
 
     document.dispatchEvent(event);
 };
-
-function validateBpm(bpm) {
-    if (Number.isNaN(bpm)) {
-        return false;
-    }
-
-    return bpm >= MIN_TEMPO && bpm <= MAX_TEMPO;
-}

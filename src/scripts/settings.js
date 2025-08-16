@@ -1,5 +1,10 @@
 import { Storage } from './utils.js';
-import { PITCH, MAX_TEMPO, MIN_TEMPO } from './constants.js';
+import {
+    PITCH,
+    BOTTOMSHEET_TYPE,
+    MAX_TEMPO,
+    MIN_TEMPO
+} from './constants.js';
 
 const DEFAULT_TEMPO = 120;
 const DEFAULT_BEATS = [
@@ -15,6 +20,7 @@ export const SETTINGS_KEY = 'metronome-settings';
 export class Settings {
     #dom;
     #settingsBpmDom;
+    #settingsTsDom;
     #metronome;
     #visr;
     #tempo;
@@ -22,9 +28,10 @@ export class Settings {
     #noteValue;
     #player;
 
-    constructor(dom, settingsBpmDom, metronome, visr, player, savedSettings) {
+    constructor(dom, settingsBpmDom, settingsTsDom, metronome, visr, player, savedSettings) {
         this.#dom = dom;
         this.#settingsBpmDom = settingsBpmDom;
+        this.#settingsTsDom = settingsTsDom;
 
         this.#metronome = metronome;
         this.#visr = visr;
@@ -47,8 +54,8 @@ export class Settings {
         this.#metronome.init(settings);
         this.#visr.init(settings, this.#onOptionsChangeCb)
 
-        this.#setBpm(this.#tempo);
-        this.#setTimeSignature(this.#beats.length);
+        this.#dom.setBpm(this.#tempo);
+        this.#dom.setTimeSignature(this.#beats.length, this.#noteValue);
         this.#listen();
     }
 
@@ -59,14 +66,6 @@ export class Settings {
             this.#beats[idx].pitch = pitch;
         }
     };
-
-    #setBpm(tempo) {
-        this.#dom.setBpm(tempo);
-    }
-
-    #setTimeSignature(beatsCount) {
-        this.#dom.setTimeSignature(beatsCount);
-    }
 
     #listen() {
         this.#dom.onTempoButtonClick(({ delta }) => {
@@ -80,30 +79,70 @@ export class Settings {
                 this.#tempo = newTempo;
             }
 
-            this.#updateSettings();
+            this.#updateSettings({ isBpmChanged: true });
         });
 
         this.#dom.onBpmButtonClick(() => {
             this.#settingsBpmDom.setSettingsBpm(this.#tempo);
-            this.#dom.openBottomSheet();
+            this.#dom.openBottomSheet(BOTTOMSHEET_TYPE.BPM_SETTINS);
+        });
+
+        this.#dom.onTimeSignatureButtonClick(() => {
+            this.#settingsTsDom.setSettingsTimeSignature(this.#beats.length, this.#noteValue);
+            this.#dom.openBottomSheet(BOTTOMSHEET_TYPE.TIME_SIGNATURE_SETTINGS);
         });
 
         this.#dom.onResetButtonClick(() => {
             this.#tempo = DEFAULT_TEMPO;
-            this.#updateSettings();
+            this.#updateSettings({ isBpmChanged: true });
         });
 
         this.#settingsBpmDom.listen((newBpm) => {
             this.#tempo = newBpm;
-            this.#updateSettings();
+            this.#updateSettings({ isBpmChanged: true });
+        });
+
+        this.#settingsTsDom.listen(({ newBeatsCount, newNoteValue }) => {
+            if (newBeatsCount) {
+                this.#changeBeats(newBeatsCount)
+            }
+
+            if (newNoteValue) {
+                this.#noteValue = newNoteValue;
+            }
+
+            this.#updateSettings({ isTsChanged: true });
         });
     }
 
-    #updateSettings() {
-        this.#setBpm(this.#tempo);
-        this.#dom.animateTempoChange();
+    #changeBeats(newBeatsCount) {
+        const beatsCount = this.#beats.length;
+
+        if (newBeatsCount < beatsCount) {
+            this.#beats.length = newBeatsCount;
+        } else {
+            const diffBeatsCount = newBeatsCount - beatsCount;
+
+            for (let i = 0; i < diffBeatsCount; i++) {
+                this.#beats.push({ idx: beatsCount + i, pitch: PITCH.ORDINARY });
+            }
+        }
+
+        this.#visr.setBarsFromBeats(this.#beats);
+    }
+
+    #updateSettings({ isBpmChanged, isTsChanged }) {
+        if (isBpmChanged) {
+            this.#dom.setBpm(this.#tempo);
+            this.#dom.animateTempoChange();
+        } else if (isTsChanged) {
+            this.#dom.setTimeSignature(this.#beats.length, this.#noteValue);
+        }
+
         this.#saveSettings();
         this.#metronome.setTempo(this.#tempo, this.#player.isPlaying());
+        this.#metronome.setBeats(this.#beats, this.#player.isPlaying());
+        this.#metronome.setNoteValue(this.#noteValue);
         this.#visr.toggleBeatExtraAnimator({
             shouldPause: !this.#player.isPlaying(),
             duration: this.#metronome.getSecondsPerBeat()

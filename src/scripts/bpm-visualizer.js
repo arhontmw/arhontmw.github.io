@@ -32,11 +32,11 @@ export class BpmVisualizer {
     init(options, onOptionsUpdateCb) {
         const { beats } = options;
 
-        this.#setBarsFromBeats(beats);
+        this.setBarsFromBeats(beats);
         this.#onOptionsChangeCb = onOptionsUpdateCb;
     }
 
-    #setBarsFromBeats(beats) {
+    setBarsFromBeats(beats) {
         const bars = convertBeatsToBars(beats);
 
         this.#dom.setBars(

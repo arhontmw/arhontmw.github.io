@@ -6,7 +6,8 @@ import {
     PlayerDom,
     SettingsDom,
     BpmVisualizerDom,
-    SettingsBpmDom
+    SettingsBpmDom,
+    SettingsTsDom
 } from './dom.js';
 import { initWakeLock } from './wake-lock.js';
 import { initVibration } from './vibration.js';
@@ -30,11 +31,13 @@ function init() {
     );
 
     const settingsBpmDom = new SettingsBpmDom();
+    const settingsTsDom = new SettingsTsDom();
     const settingsDom = new SettingsDom();
     const savedSettings = retrieveSavedSettings();
     const settings = new Settings(
         settingsDom,
         settingsBpmDom,
+        settingsTsDom,
         metronome,
         bpmVisualizer,
         player,

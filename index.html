@@ -47,16 +47,62 @@
         <div class="footer-settings-container">
             <button class="reset-button" data-vibro="1">RESET BPM</button>
         </div>
-        <div class="bottomsheet-wrapper">
+        <div class="bpm-settings bottomsheet-wrapper">
             <div class="bottomsheet">
                 <div class="bottomsheet-settings-container">
-                    <div class="bottomsheet-bpm-slot">
+                    <div class="bottomsheet-bpm-controls">
                         <label class="settings-bpm-input-label" for="bpm-input">ENTER BPM</label>
                         <input class="settings-bpm-input" type="number" id="bpm-input" min="20" max="600">
                     </div>
-                    <div class="bottomsheet-control-buttons">
+                    <div class="bottomsheet-control-buttons bpm-controls">
                         <button class="bottomsheet-control-button bottomsheet-control-close-button" data-vibro="1">CLOSE</button>
                         <button class="bottomsheet-control-button bottomsheet-control-save-button" data-vibro="1">SAVE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="time-signature-settings bottomsheet-wrapper">
+            <div class="bottomsheet">
+                <div class="bottomsheet-settings-container">
+                    <span class="settings-time-signature-title">TIME SIGNATURE</span>
+                    <div class="bottomsheet-time-signature-controls">
+                        <div class="settings-time-signature-control-group">
+                            <button class="bottomsheet-arrow-button beats-up">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="32" viewBox="0 0 24 16" fill="none">
+                                    <path fill-rule="evenodd"
+                                        d="M11.293 4.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1-1.414 1.414L12 6.414l-5.293 5.293a1 1 0 0 1-1.414-1.414l6-6z"
+                                        fill="currentColor" />
+                                </svg>
+                            </button>
+                            <div class="settings-output-window settings-output-window-beats">4</div>
+                            <button class="bottomsheet-arrow-button beats-down">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="32" viewBox="0 0 24 16" fill="none">
+                                    <path fill-rule="evenodd"
+                                        d="M11.293 4.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1-1.414 1.414L12 6.414l-5.293 5.293a1 1 0 0 1-1.414-1.414l6-6z"
+                                        fill="currentColor" transform="rotate(180 12 8)" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="settings-time-signature-divider">
+                            /
+                        </div>
+                        <div class="settings-time-signature-control-group">
+                            <button class="bottomsheet-arrow-button notevalue-up">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="32" viewBox="0 0 24 16" fill="none">
+                                    <path fill-rule="evenodd"
+                                        d="M11.293 4.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1-1.414 1.414L12 6.414l-5.293 5.293a1 1 0 0 1-1.414-1.414l6-6z"
+                                        fill="currentColor" />
+                                </svg>
+                            </button>
+                            <div class="settings-output-window settings-output-window-notevalue">4</div>
+                            <button class="bottomsheet-arrow-button notevalue-down">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="32" viewBox="0 0 24 16" fill="none">
+                                    <path fill-rule="evenodd"
+                                        d="M11.293 4.293a1 1 0 0 1 1.414 0l6 6a1 1 0 0 1-1.414 1.414L12 6.414l-5.293 5.293a1 1 0 0 1-1.414-1.414l6-6z"
+                                        fill="currentColor" transform="rotate(180 12 8)" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

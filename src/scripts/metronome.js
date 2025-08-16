@@ -123,6 +123,10 @@ export class Metronome {
         }
     }
 
+    setNoteValue(noteValue) {
+        this.#noteValue = noteValue;
+    }
+
     getSecondsPerBeat() {
         return SECONDS_IN_MINUTE / this.#tempo;
     }

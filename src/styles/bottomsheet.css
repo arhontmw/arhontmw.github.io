@@ -2,6 +2,8 @@
     --bottomsheet-control-button-color: var(--white);
     --bottomsheet-control-button-color_disabled: var(--white40);
     --bottomsheet-control-button-background-color: rgba(255, 255, 255, 0.4);
+    --bottomsheet-arrow-button-color: var(--white);
+    --bottomsheet-arrow-button-background-color: transparent;
 }
 
 .bottomsheet-wrapper {
@@ -64,3 +66,23 @@
     transform: scale(0.9);
 }
 
+.settings-time-signature-control-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.bottomsheet-arrow-button {
+    color: var(--bottomsheet-arrow-button-color);
+    background-color: var(--bottomsheet-arrow-button-background-color);
+    transition: transform 0.1s;
+}
+
+.bottomsheet-arrow-button:active {
+    transform: scale(0.85);
+}
+
+.button-hidden {
+    visibility: hidden;
+}
