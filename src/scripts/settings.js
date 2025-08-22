@@ -64,6 +64,7 @@ export class Settings {
             const { idx, pitch } = beat;
 
             this.#beats[idx].pitch = pitch;
+            this.#updateSettings({ isTsChanged: true });
         }
     };
 
