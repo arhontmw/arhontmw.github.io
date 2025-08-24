@@ -24,6 +24,11 @@
     --settings-output-window-color: var(--white);
     --settings-output-window-background-color: var(--black20);
     --settings-divider-window-color: var(--white);
+
+    --extra-settings-title: var(--white);
+    --extra-settings-select-button: var(--white);
+    --extra-settings-select-button-background-color: var(--white20);
+    --extra-settings-select-button-background-color-active: var(--white40);
 }
 
 .tempo-button-container {
@@ -55,7 +60,7 @@
     text-align: center;
 }
 
-.settings-button,
+.extra-button,
 .reset-button {
     background-color: transparent;
     transition: transform 0.3s;
@@ -65,11 +70,11 @@
     font-size: 1rem;
 }
 
-.settings-button {
+.extra-button {
     padding: 0;
 }
 
-.settings-button:active,
+.extra-button:active,
 .reset-button:active {
     transform: scale(0.8);
 }
@@ -142,7 +147,8 @@
     margin-bottom: 24px;
 }
 
-.settings-time-signature-title {
+.settings-time-signature-title,
+.extra-settings-title {
     color: var(--settings-bpm-label);
     text-align: center;
     font-size: 1.5rem;
@@ -159,6 +165,35 @@
     border-radius: 6px;
     background-color: var(--settings-bpm-input-background-color);
     color: var(--settings-bpm-input-color);
+}
+
+.extra-settings-select-group {
+    display: flex;
+    margin-top: 16px;
+}
+
+.extra-settings-slot:last-child {
+    margin-bottom: 32px;
+}
+
+.extra-settings-select-button {
+    color: var(--extra-settings-select-button);
+    background-color: var(--extra-settings-select-button-background-color);
+    width: 80px;
+    padding: 12px 8px;
+    text-align: center;
+}
+
+.extra-settings-select-button:first-child {
+    border-radius: 12px 0 0 12px;
+}
+
+.extra-settings-select-button:last-child {
+    border-radius: 0 12px 12px 0;
+}
+
+.extra-settings-select-button_active {
+    background-color: var(--extra-settings-select-button-background-color-active);
 }
 
 @keyframes bpm-changed {

@@ -36,6 +36,7 @@ export class PlayerDom {
 export class SettingsDom {
     #bpm;
     #timeSignature;
+    #extra;
     #resetButton;
     #settingsBpmInput;
     #tempoButtons;
@@ -43,6 +44,7 @@ export class SettingsDom {
     constructor() {
         this.#bpm = document.querySelector('.bpm');
         this.#timeSignature = document.querySelector('.time-signature');
+        this.#extra = document.querySelector('.extra-button');
         this.#resetButton = document.querySelector('.reset-button');
         this.#settingsBpmInput = document.querySelector('.settings-bpm-input');
         this.#tempoButtons = document.querySelectorAll('.tempo-button');
@@ -73,7 +75,11 @@ export class SettingsDom {
 
     onTimeSignatureButtonClick = (cb) => {
         this.#timeSignature.addEventListener('click', cb);
-    }
+    };
+
+    onExtraButtonClick = (cb) => {
+        this.#extra.addEventListener('click', cb);
+    };
 
     onResetButtonClick = (cb) => {
         this.#resetButton.addEventListener('click', cb);
@@ -190,7 +196,7 @@ export class SettingsBpmDom {
         this.#cancelButton = document.querySelector('.bpm-controls > .bottomsheet-control-close-button');
     }
 
-    setSettingsBpm(bpm) {
+    set(bpm) {
         const isBpmValid = validateBpm(bpm);
 
         if (isBpmValid) {
@@ -261,7 +267,7 @@ export class SettingsTsDom {
         this.#outputWindowNoteValue = document.querySelector('.settings-output-window-notevalue');
     }
 
-    setSettingsTimeSignature(beatsCount, noteValue) {
+    set(beatsCount, noteValue) {
         this.#beatsCount = beatsCount;
         this.#noteValue = noteValue;
         this.#outputWindowBeats.textContent = beatsCount;
@@ -324,6 +330,19 @@ export class SettingsTsDom {
             this.#notevalueUpButton.classList.remove('button-hidden');
             this.#notevalueDownButton.classList.remove('button-hidden');
         }
+    }
+}
+
+export class SettingsExtraDom {
+    #theme = null;
+    #sound = null;
+
+    constructor() {
+    }
+
+    set({ theme, sound }) {
+        this.#theme = theme;
+        this.#sound = sound;
     }
 }
 

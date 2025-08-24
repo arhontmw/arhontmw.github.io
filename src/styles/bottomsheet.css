@@ -31,9 +31,17 @@
     padding: 24px;
 }
 
-.bottomsheet-settings-container {
+.bottomsheet-settings-container,
+.bottomsheet-extra-settings-container {
     display: flex;
     flex-direction: column;
+}
+
+.bottomsheet-extra-settings-container {
+    gap: 1.5rem;
+}
+
+.bottomsheet-settings-container {
     align-items: center;
 }
 

@@ -14,6 +14,10 @@ const DEFAULT_BEATS = [
     { idx: 3, pitch: PITCH.ORDINARY }
 ];
 const DEFAULT_NOTE_VALUE = 4;
+const DEFAULT_EXTRA = {
+    theme: 'sunset',
+    sound: 'snap'
+};
 
 export const SETTINGS_KEY = 'metronome-settings';
 
@@ -21,17 +25,20 @@ export class Settings {
     #dom;
     #settingsBpmDom;
     #settingsTsDom;
+    #settingsExtraDom;
     #metronome;
     #visr;
     #tempo;
     #beats;
     #noteValue;
     #player;
+    #extra;
 
-    constructor(dom, settingsBpmDom, settingsTsDom, metronome, visr, player, savedSettings) {
+    constructor(dom, settingsBpmDom, settingsTsDom, settingsExtraDom, metronome, visr, player, savedSettings) {
         this.#dom = dom;
         this.#settingsBpmDom = settingsBpmDom;
         this.#settingsTsDom = settingsTsDom;
+        this.#settingsExtraDom = settingsExtraDom;
 
         this.#metronome = metronome;
         this.#visr = visr;
@@ -41,11 +48,14 @@ export class Settings {
             tempo,
             beats,
             noteValue,
+            extra
         } = savedSettings;
 
         this.#tempo = tempo || DEFAULT_TEMPO;
         this.#beats = beats || DEFAULT_BEATS;
         this.#noteValue = noteValue || DEFAULT_NOTE_VALUE;
+
+        this.#extra = extra || DEFAULT_EXTRA;
     }
 
     init() {
@@ -84,13 +94,18 @@ export class Settings {
         });
 
         this.#dom.onBpmButtonClick(() => {
-            this.#settingsBpmDom.setSettingsBpm(this.#tempo);
+            this.#settingsBpmDom.set(this.#tempo);
             this.#dom.openBottomSheet(BOTTOMSHEET_TYPE.BPM_SETTINS);
         });
 
         this.#dom.onTimeSignatureButtonClick(() => {
-            this.#settingsTsDom.setSettingsTimeSignature(this.#beats.length, this.#noteValue);
+            this.#settingsTsDom.set(this.#beats.length, this.#noteValue);
             this.#dom.openBottomSheet(BOTTOMSHEET_TYPE.TIME_SIGNATURE_SETTINGS);
+        });
+
+        this.#dom.onExtraButtonClick(() => {
+            this.#settingsExtraDom.set(this.#extra);
+            this.#dom.openBottomSheet(BOTTOMSHEET_TYPE.EXTRA_SETTINGS);
         });
 
         this.#dom.onResetButtonClick(() => {
@@ -155,6 +170,7 @@ export class Settings {
             tempo: this.#tempo,
             beats: this.#beats,
             noteValue: this.#noteValue,
+            extra: this.#extra
         };
     }
 
