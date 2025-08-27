@@ -1,12 +1,13 @@
 {
+    "id": "lite_metronome",
     "name": "Lite Metronome",
     "version": "1.0.0",
     "short_name": "Metronome",
     "start_url": ".",
     "lang": "en",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "description": "Simple fast-loading metronome to train your rhythm and music skills",
+    "background_color": "#000000",
+    "description": "Simple fast-loading PWA metronome to train your rhythm and music skills",
     "icons": [
         {
             "src": "./src/icons/android-chrome-192x192.png",
@@ -21,5 +22,46 @@
     ],
     "theme_color": "#030f76",
     "orientation": "portrait",
-    "categories": ["music", "education", "utilities"]
+    "categories": ["music", "education", "utilities"],
+    "screenshots": [
+        {
+            "src": "./screenshots/screen1.png",
+            "sizes": "2880x1800",
+            "type": "image/png",
+            "description": "Home Screen"
+        },
+        {
+            "src": "./screenshots/screen2.png",
+            "sizes": "2880x1800",
+            "type": "image/png",
+            "description": "Settings Screen"
+        },
+        {
+            "src": "./screenshots/screen3.png",
+            "sizes": "2880x1800",
+            "type": "image/png",
+            "description": "Extra Screen"
+        },
+        {
+            "src": "./screenshots/screen4.png",
+            "sizes": "2880x1800",
+            "type": "image/png",
+            "description": "Theme Screen"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Start Lite Metronome",
+            "short_name": "Metronome",
+            "description": "Jump into the home screen of Lite Metronome",
+            "url": "/",
+            "icons": [
+                {
+                    "src": "./src/icons/android-chrome-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ],
+    "display_override": ["window-controls-overlay"]
 }
