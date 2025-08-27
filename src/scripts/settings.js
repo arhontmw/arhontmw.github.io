@@ -3,7 +3,9 @@ import {
     PITCH,
     BOTTOMSHEET_TYPE,
     MAX_TEMPO,
-    MIN_TEMPO
+    MIN_TEMPO,
+    THEMES,
+    SOUNDS
 } from './constants.js';
 
 const DEFAULT_TEMPO = 120;
@@ -15,8 +17,8 @@ const DEFAULT_BEATS = [
 ];
 const DEFAULT_NOTE_VALUE = 4;
 const DEFAULT_EXTRA = {
-    theme: 'sunset',
-    sound: 'snap'
+    theme: THEMES.SUNSET,
+    sound: SOUNDS.SNAP
 };
 
 export const SETTINGS_KEY = 'metronome-settings';

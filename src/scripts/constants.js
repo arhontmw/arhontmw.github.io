@@ -17,3 +17,12 @@ export const BOTTOMSHEET_TYPE = {
 
 export const MIN_TEMPO = 20;
 export const MAX_TEMPO = 600;
+
+export const THEMES = {
+    SUNSET: 'sunset',
+    TITAN: 'titan'
+};
+export const SOUNDS = {
+    SNAP: 'snap',
+    DRUMS: 'drums'
+};

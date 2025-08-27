@@ -3,6 +3,7 @@ const ASSETS = [
   '/',
   '/index.html',
   '/manifest.json',
+  '/service-worker.js',
   // icons
   '/src/icons/android-chrome-192x192.png',
   '/src/icons/android-chrome-512x512.png',
