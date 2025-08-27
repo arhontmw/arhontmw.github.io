@@ -336,13 +336,50 @@ export class SettingsTsDom {
 export class SettingsExtraDom {
     #theme = null;
     #sound = null;
+    #app = null;
+    #themeButtons = null;
+    #currentThemeButton = null;
+    #soundButtons = null;
+    #currentSoundButton = null;
 
     constructor() {
+        this.#app = document.querySelector('.app');
+        this.#themeButtons = [...document.querySelectorAll('.extra-settings-select-button.theme-button')];
+        this.#soundButtons = [...document.querySelectorAll('.extra-settings-select-button.sound-button')];
     }
 
     set({ theme, sound }) {
         this.#theme = theme;
         this.#sound = sound;
+
+        this.#currentThemeButton = this.#themeButtons.find(button => button.dataset.theme === theme);
+        this.#currentThemeButton.classList.add('extra-settings-select-button_active');
+        this.#currentSoundButton = this.#soundButtons.find(button => button.dataset.sound === sound);
+        this.#currentSoundButton.classList.add('extra-settings-select-button_active');
+    }
+
+    listen(onChange) {
+        this.#themeButtons.forEach((themeButton) => {
+            themeButton.addEventListener('click', (event) => {
+                this.#currentThemeButton.classList.remove('extra-settings-select-button_active');
+                this.#currentThemeButton = event.target;
+                this.#currentThemeButton.classList.add('extra-settings-select-button_active');
+                this.#app.classList.remove(`${this.#theme}-theme`);
+                this.#theme = this.#currentThemeButton.dataset.theme;
+                this.#app.classList.add(`${this.#theme}-theme`);
+                onChange({ theme: this.#theme });
+            });
+        });
+
+        this.#soundButtons.forEach((soundButton) => {
+            soundButton.addEventListener('click', (event) => {
+                this.#currentSoundButton.classList.remove('extra-settings-select-button_active');
+                this.#currentSoundButton = event.target;
+                this.#currentSoundButton.classList.add('extra-settings-select-button_active');
+                this.#sound = this.#currentSoundButton.dataset.sound;
+                onChange({ sound: this.#sound });
+            });
+        });
     }
 }
 

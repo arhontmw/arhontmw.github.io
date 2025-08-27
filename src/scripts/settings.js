@@ -24,6 +24,7 @@ const DEFAULT_EXTRA = {
 export const SETTINGS_KEY = 'metronome-settings';
 
 export class Settings {
+    #app;
     #dom;
     #settingsBpmDom;
     #settingsTsDom;
@@ -64,6 +65,7 @@ export class Settings {
         const settings = this.#getSettings();
 
         this.#metronome.init(settings);
+        this.#player.setPlaySoundMethod(settings.extra.sound);
         this.#visr.init(settings, this.#onOptionsChangeCb)
 
         this.#dom.setBpm(this.#tempo);
@@ -131,6 +133,19 @@ export class Settings {
 
             this.#updateSettings({ isTsChanged: true });
         });
+
+        this.#settingsExtraDom.listen(({ theme, sound }) => {
+            if (theme) {
+                this.#extra.theme = theme;
+            }
+
+            if (sound) {
+                this.#extra.sound = sound;
+                this.#player.setPlaySoundMethod(sound);
+            }
+
+            this.#updateSettings();
+        });
     }
 
     #changeBeats(newBeatsCount) {
@@ -149,7 +164,7 @@ export class Settings {
         this.#visr.setBarsFromBeats(this.#beats);
     }
 
-    #updateSettings({ isBpmChanged, isTsChanged }) {
+    #updateSettings({ isBpmChanged, isTsChanged } = {}) {
         if (isBpmChanged) {
             this.#dom.setBpm(this.#tempo);
             this.#dom.animateTempoChange();
