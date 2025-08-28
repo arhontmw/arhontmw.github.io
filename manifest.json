@@ -25,37 +25,37 @@
     "categories": ["music", "education", "utilities"],
     "screenshots": [
         {
-            "src": "./screenshots/lite-metronome-sunset.png",
+            "src": "./src/screenshots/lite-metronome-sunset.png",
             "sizes": "1170x2532",
             "type": "image/png",
             "description": "Home Screen"
         },
         {
-            "src": "./screenshots/lite-metronome-bpm.png",
+            "src": "./src/screenshots/lite-metronome-bpm.png",
             "sizes": "1170x2532",
             "type": "image/png",
             "description": "Change BRM"
         },
         {
-            "src": "./screenshots/lite-metronome-bpm-settings.png",
+            "src": "./src/screenshots/lite-metronome-bpm-settings.png",
             "sizes": "1170x2532",
             "type": "image/png",
             "description": "BPM Settings"
         },
         {
-            "src": "./screenshots/lite-metronome-extra-settings.png",
+            "src": "./src/screenshots/lite-metronome-extra-settings.png",
             "sizes": "1170x2532",
             "type": "image/png",
             "description": "Extra Settings"
         },
         {
-            "src": "./screenshots/lite-metronome-ts-settings.png",
+            "src": "./src/screenshots/lite-metronome-ts-settings.png",
             "sizes": "1170x2532",
             "type": "image/png",
             "description": "Time Signature Settings"
         },
         {
-            "src": "./screenshots/lite-metronome-titan.png",
+            "src": "./src/screenshots/lite-metronome-titan.png",
             "sizes": "1170x2532",
             "type": "image/png",
             "description": "Titan Theme"
