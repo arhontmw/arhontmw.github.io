@@ -21,7 +21,7 @@
         }
     ],
     "theme_color": "#030f76",
-    "orientation": "portrait",
+    "orientation": "portrait-primary",
     "categories": ["music", "education", "utilities"],
     "screenshots": [
         {
