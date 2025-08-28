@@ -43,7 +43,7 @@ body {
     width: 100vw;
     height: 100dvh;
     box-sizing: border-box;
-    padding: 3dvh 6vw;
+    padding: 3dvh 6vw 6dvh;
     display: flex;
     flex-direction: column;
 }

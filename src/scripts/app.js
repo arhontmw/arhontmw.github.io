@@ -14,7 +14,7 @@ import { initWakeLock } from './wake-lock.js';
 import { initVibration } from './vibration.js';
 import { initBottomsheetManager } from './bottomsheet-manager.js';
 import { Storage } from './utils.js';
-import { THEMES } from './constants.js';
+import { THEMES, THEMES_BACKGROUND_COLOR } from './constants.js';
 
 const retrieveSavedSettings = () => Storage.read(SETTINGS_KEY) || {};
 
@@ -22,6 +22,7 @@ const loadTheme = ({ extra }) => {
     const theme = extra ? extra.theme : THEMES.SUNSET;
     document.querySelector('.app').classList.add(`${theme}-theme`);
     document.querySelector('.app-loader').classList.remove('app-loader');
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', THEMES_BACKGROUND_COLOR[theme]);
 };
 
 function init() {

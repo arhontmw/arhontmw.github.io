@@ -22,6 +22,10 @@ export const THEMES = {
     SUNSET: 'sunset',
     TITAN: 'titan'
 };
+export const THEMES_BACKGROUND_COLOR = {
+    [THEMES.SUNSET]: '#030f76',
+    [THEMES.TITAN]: '#000000'
+};
 export const SOUNDS = {
     SNAP: 'snap',
     DRUMS: 'drums'
