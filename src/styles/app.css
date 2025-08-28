@@ -53,7 +53,7 @@ body {
 }
 
 .app.titan-theme {
-    background-image: linear-gradient(to right, #434343 0%, #000 100%);
+    background-image: linear-gradient(to top, #434343 0%, #000 100%);
     --pitch-bar-background-color-active: var(--yellowgreen);
     --beat-extra-animator-background-color: var(--yellowgreen);
     --play-button-background-color-beat: var(--dark-yellowgreen);
