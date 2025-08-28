@@ -14,10 +14,20 @@ import { initWakeLock } from './wake-lock.js';
 import { initVibration } from './vibration.js';
 import { initBottomsheetManager } from './bottomsheet-manager.js';
 import { Storage } from './utils.js';
+import { THEMES } from './constants.js';
 
 const retrieveSavedSettings = () => Storage.read(SETTINGS_KEY) || {};
 
+const loadTheme = ({ extra }) => {
+    const theme = extra ? extra.theme : THEMES.SUNSET;
+    document.querySelector('.app').classList.add(`${theme}-theme`);
+    document.querySelector('.app-loader').classList.remove('app-loader');
+};
+
 function init() {
+    const savedSettings = retrieveSavedSettings();
+    loadTheme(savedSettings);
+
     const bpmVisualizerDom = new BpmVisualizerDom();
     const bpmVisualizer = new BpmVisualizer(bpmVisualizerDom);
 
@@ -35,7 +45,6 @@ function init() {
     const settingsTsDom = new SettingsTsDom();
     const settingsExtraDom = new SettingsExtraDom();
     const settingsDom = new SettingsDom();
-    const savedSettings = retrieveSavedSettings();
     const settings = new Settings(
         settingsDom,
         settingsBpmDom,

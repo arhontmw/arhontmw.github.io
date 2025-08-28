@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="./src/styles/app.css">
 </head>
 <body ontouchstart="">
-    <div class="app sunset-theme">
+    <div class="app-loader"></div>
+    <div class="app">
         <div class="bpm-visualizer-container">
             <div class="bars-container"></div>
             <div class="beat-animation-container">
@@ -132,7 +133,7 @@
     <script src="./service-worker.js" type="module"></script>
     <script>
         if (typeof navigator.serviceWorker !== 'undefined') {
-            navigator.serviceWorker.register('service-worker.js')
+            navigator.serviceWorker.register('service-worker.js');
         }
     </script>
 </body>

@@ -54,4 +54,19 @@ body {
 
 .app.titan-theme {
     background-image: linear-gradient(to right, #434343 0%, #000 100%);
+    --pitch-bar-background-color-active: var(--yellowgreen);
+    --beat-extra-animator-background-color: var(--yellowgreen);
+    --play-button-background-color-beat: var(--dark-yellowgreen);
+    --bpm-color-changed: var(--dark-yellowgreen);
+    --tempo-button-color-active: var(--dark-yellowgreen);
+}
+
+.app-loader {
+    background-color: #030f76;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
 }

@@ -1,11 +1,14 @@
 :root {
-    /* sunset-theme*/
+
     --white: #fff;
-    --metro-blue: rgb(0, 180, 255);
     --white20: rgba(255, 255, 255, 0.2);
     --white40: rgba(255, 255, 255, 0.4);
     --white73: rgba(255, 255, 255, 0.73);
-    --dark-blue: rgb(3, 15, 118);
     --black20: rgba(0, 0, 0, 0.2);
-    /* void-theme */
+    /* sunset-theme*/
+    --metro-blue: rgb(0, 180, 255);
+    --dark-blue: rgb(3, 15, 118);
+    /* titan-theme */
+    --yellowgreen: rgba(210, 255, 0);
+    --dark-yellowgreen: rgba(160, 255, 0);
 }
