@@ -38,6 +38,16 @@ body {
     --box-shadow-default: 0px 1px 3px rgba(0, 0, 0, 0.05), 0px 4px 30px rgba(0, 0, 0, 0.1);
 }
 
+.app-loader {
+    background-color: #030f76;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
 .app {
     background-color: var(--app-background-color);
     width: 100vw;
@@ -59,14 +69,4 @@ body {
     --play-button-background-color-beat: var(--dark-yellowgreen);
     --bpm-color-changed: var(--dark-yellowgreen);
     --tempo-button-color-active: var(--dark-yellowgreen);
-}
-
-.app-loader {
-    background-color: #030f76;
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
 }
