@@ -70,6 +70,9 @@ export class Settings {
 
         this.#dom.setBpm(this.#tempo);
         this.#dom.setTimeSignature(this.#beats.length, this.#noteValue);
+
+        this.#settingsExtraDom.init(this.#extra);
+
         this.#listen();
     }
 

@@ -1,4 +1,5 @@
 import {
+    THEMES_BACKGROUND_COLOR,
     BOTTOMSHEET_VISIBILITY_EVENT,
     MAX_TEMPO,
     MIN_TEMPO
@@ -336,16 +337,28 @@ export class SettingsTsDom {
 export class SettingsExtraDom {
     #theme = null;
     #sound = null;
-    #app = null;
-    #themeButtons = null;
-    #currentThemeButton = null;
-    #soundButtons = null;
-    #currentSoundButton = null;
+    #app;
+    #appLoader;
+    #themeColorMeta;
+    #themeButtons;
+    #currentThemeButton;
+    #soundButtons;
+    #currentSoundButton;
 
     constructor() {
         this.#app = document.querySelector('.app');
+        this.#appLoader = document.querySelector('.app-loader');
+        this.#themeColorMeta = document.querySelector('meta[name="theme-color"]');
         this.#themeButtons = [...document.querySelectorAll('.extra-settings-select-button.theme-button')];
         this.#soundButtons = [...document.querySelectorAll('.extra-settings-select-button.sound-button')];
+    }
+
+    init({ theme }) {
+        this.#theme = theme;
+
+        this.#app.classList.add(`${this.#theme}-theme`);
+        this.#appLoader.classList.remove('app-loader');
+        this.#updateThemeColor(this.#theme);
     }
 
     set({ theme, sound }) {
@@ -367,6 +380,7 @@ export class SettingsExtraDom {
                 this.#app.classList.remove(`${this.#theme}-theme`);
                 this.#theme = this.#currentThemeButton.dataset.theme;
                 this.#app.classList.add(`${this.#theme}-theme`);
+                this.#updateThemeColor(this.#theme);
                 onChange({ theme: this.#theme });
             });
         });
@@ -380,6 +394,10 @@ export class SettingsExtraDom {
                 onChange({ sound: this.#sound });
             });
         });
+    }
+
+    #updateThemeColor(theme) {
+        this.#themeColorMeta.setAttribute('content', THEMES_BACKGROUND_COLOR[theme]);
     }
 }
 
@@ -403,7 +421,6 @@ const validateBpm = (bpm) => {
 
     return bpm >= MIN_TEMPO && bpm <= MAX_TEMPO;
 };
-
 
 const dispatchOpenBottomSheet = (type) => {
     dispatchEvent(BOTTOMSHEET_VISIBILITY_EVENT, { status: 'open', type });
