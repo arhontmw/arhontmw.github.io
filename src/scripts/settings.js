@@ -1,27 +1,11 @@
-import { Storage } from './utils.js';
+import { saveSettings } from './utils.js';
 import {
     PITCH,
     BOTTOMSHEET_TYPE,
     MAX_TEMPO,
     MIN_TEMPO,
-    THEMES,
-    SOUNDS
+    DEFAULT_TEMPO
 } from './constants.js';
-
-const DEFAULT_TEMPO = 120;
-const DEFAULT_BEATS = [
-    { idx: 0, pitch: PITCH.ACCENT },
-    { idx: 1, pitch: PITCH.ORDINARY },
-    { idx: 2, pitch: PITCH.ORDINARY },
-    { idx: 3, pitch: PITCH.ORDINARY }
-];
-const DEFAULT_NOTE_VALUE = 4;
-const DEFAULT_EXTRA = {
-    theme: THEMES.SUNSET,
-    sound: SOUNDS.SNAP
-};
-
-export const SETTINGS_KEY = 'metronome-settings';
 
 export class Settings {
     #app;
@@ -54,11 +38,10 @@ export class Settings {
             extra
         } = savedSettings;
 
-        this.#tempo = tempo || DEFAULT_TEMPO;
-        this.#beats = beats || DEFAULT_BEATS;
-        this.#noteValue = noteValue || DEFAULT_NOTE_VALUE;
-
-        this.#extra = extra || DEFAULT_EXTRA;
+        this.#tempo = tempo;
+        this.#beats = beats;
+        this.#noteValue = noteValue;
+        this.#extra = extra;
     }
 
     init() {
@@ -195,6 +178,6 @@ export class Settings {
     }
 
     #saveSettings() {
-        Storage.save(SETTINGS_KEY, this.#getSettings());
+        saveSettings(this.#getSettings());
     }
 }

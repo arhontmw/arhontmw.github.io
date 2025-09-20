@@ -85,6 +85,13 @@
     margin-top: 2rem;
 }
 
+@media (orientation: landscape) {
+    .footer-settings-container,
+    .settings-container {
+        display: none;
+    }
+}
+
 .bpm,
 .time-signature {
     text-align: center;

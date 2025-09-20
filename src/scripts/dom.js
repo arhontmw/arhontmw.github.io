@@ -1,8 +1,15 @@
 import {
+    validateBeatsCountIsMax,
+    validateBeatsCountIsMin,
+    validateBeatsCount,
+    validateNoteValueIsMax,
+    validateNoteValueIsMin,
+    validateNoteValue,
+    validateBpm
+} from './utils.js';
+import {
     THEMES_BACKGROUND_COLOR,
-    BOTTOMSHEET_VISIBILITY_EVENT,
-    MAX_TEMPO,
-    MIN_TEMPO
+    BOTTOMSHEET_VISIBILITY_EVENT
 } from './constants.js';
 
 export class PlayerDom {
@@ -400,27 +407,6 @@ export class SettingsExtraDom {
         this.#themeColorMeta.setAttribute('content', THEMES_BACKGROUND_COLOR[theme]);
     }
 }
-
-const MAX_BEATS_COUNT = 16;
-const MIN_BEATS_COUNT = 1;
-const validateBeatsCountIsMax = (beats) => beats === MAX_BEATS_COUNT;
-const validateBeatsCountIsMin = (beats) => beats === MIN_BEATS_COUNT;
-const validateBeatsCount = (beats) => beats >= MIN_BEATS_COUNT && beats <= MAX_BEATS_COUNT;
-
-const MAX_NOTE_VALUE = 32;
-const MIN_NOTE_VALUE = 1;
-const NOTE_VALUES = [MIN_NOTE_VALUE, 2, 4, 8, 16, MAX_NOTE_VALUE];
-const validateNoteValueIsMax = (noteValue) => noteValue === MAX_NOTE_VALUE;
-const validateNoteValueIsMin = (noteValue) => noteValue === MIN_NOTE_VALUE;
-const validateNoteValue = (noteValue) => NOTE_VALUES.includes(noteValue);
-
-const validateBpm = (bpm) => {
-    if (Number.isNaN(bpm)) {
-        return false;
-    }
-
-    return bpm >= MIN_TEMPO && bpm <= MAX_TEMPO;
-};
 
 const dispatchOpenBottomSheet = (type) => {
     dispatchEvent(BOTTOMSHEET_VISIBILITY_EVENT, { status: 'open', type });

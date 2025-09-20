@@ -18,6 +18,12 @@
     margin-bottom: 8dvh;
 }
 
+@media (orientation: landscape) {
+    .player-container {
+        margin-bottom: auto;
+    }
+}
+
 .play-button {
     width: var(--play-button-width);
     height: var(--play-button-height);

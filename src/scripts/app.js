@@ -1,7 +1,7 @@
 import { Metronome } from './metronome.js';
 import { Player } from './player.js';
 import { BpmVisualizer } from './bpm-visualizer.js';
-import { Settings, SETTINGS_KEY } from './settings.js';
+import { Settings } from './settings.js';
 import {
     PlayerDom,
     SettingsDom,
@@ -13,9 +13,7 @@ import {
 import { initWakeLock } from './wake-lock.js';
 import { initVibration } from './vibration.js';
 import { initBottomsheetManager } from './bottomsheet-manager.js';
-import { Storage } from './utils.js';
-
-const retrieveSavedSettings = () => Storage.read(SETTINGS_KEY) || {};
+import { getSavedSettings } from './utils.js';
 
 function init() {
     const bpmVisualizerDom = new BpmVisualizerDom();
@@ -35,7 +33,8 @@ function init() {
     const settingsTsDom = new SettingsTsDom();
     const settingsExtraDom = new SettingsExtraDom();
     const settingsDom = new SettingsDom();
-    const savedSettings = retrieveSavedSettings();
+    const savedSettings = getSavedSettings();
+
     const settings = new Settings(
         settingsDom,
         settingsBpmDom,
