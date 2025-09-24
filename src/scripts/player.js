@@ -49,6 +49,7 @@ export class Player {
 
     #playSnap({ time, pitch }) {
         if (pitch === PITCH.MUTED) {
+            this.#playMuted({ time });
             return;
         }
 
@@ -69,6 +70,7 @@ export class Player {
 
     #playDrums({ time, pitch }) {
         if (pitch === PITCH.MUTED) {
+            this.#playMuted({ time });
             return;
         }
 
@@ -146,5 +148,19 @@ export class Player {
         noise.stop(time + noiseDuration);
         attackOsc.start(time);
         attackOsc.stop(time + 0.05);
+    }
+
+    #playMuted({ time }) {
+        const osc = this.#ctx.createOscillator();
+        const envelope = this.#ctx.createGain();
+
+        osc.frequency.value = 0;
+        envelope.gain.value = 1;
+
+        osc.connect(envelope);
+        envelope.connect(this.#ctx.destination);
+
+        osc.start(time);
+        osc.stop(time + 0.03);
     }
 }
